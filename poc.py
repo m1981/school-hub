@@ -1,28 +1,27 @@
 from bs4 import BeautifulSoup
+import html
+import re
 
 
-def parse_my_librus(html_content):
+def parse_librus_full_details(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     results = []
 
-    # Iterujemy po wierszach używając klas, które sam podałeś (line0 i line1)
-    # Szukamy ich w całym dokumencie, co omija problem szukania właściwej tabeli
+    # Szukamy wierszy z klasami line0 i line1
     rows = soup.find_all('tr', class_=['line0', 'line1'])
 
     for row in rows:
         cols = row.find_all('td', recursive=False)
 
-        # Z Twojego kodu wynika, że wiersz przedmiotu ma 11 kolumn
+        # Upewniamy się, że to wiersz przedmiotu (11 kolumn)
         if len(cols) < 10:
             continue
 
         subject_name = cols[1].get_text(strip=True)
-
-        # Pomijamy wiersze techniczne lub zachowanie
         if not subject_name or "Zachowanie" in subject_name:
             continue
 
-        # Wyciągamy oceny z kolumny 2 (Okres 1) i kolumny 6 (Okres 2)
+        # Wyciągamy oceny z odpowiednich kolumn
         okres1_oceny = extract_grades(cols[2])
         okres2_oceny = extract_grades(cols[6])
 
@@ -37,41 +36,66 @@ def parse_my_librus(html_content):
 
 def extract_grades(td_cell):
     grades = []
-    # Szukamy linków z klasą 'ocena' (zgodnie z Twoim HTML: class="ocena")
     grade_links = td_cell.find_all('a', class_='ocena')
 
     for link in grade_links:
-        ocena = link.get_text(strip=True)
+        ocena_wartosc = link.get_text(strip=True)
         title_content = link.get('title', '')
 
-        # Dekodowanie encji HTML (np. &lt;br&gt; na <br>)
-        # BeautifulSoup robi to częściowo, ale w title Librus ma to podwójnie zakodowane
-        clean_title = title_content.replace('&lt;br&gt;', '\n').replace('&lt;br/&gt;', '\n').replace('<br>',
-                                                                                                     '\n').replace(
-            '<br/>', '\n')
+        if not ocena_wartosc or not title_content:
+            continue
 
-        details = {}
+        # 1. Odkodowanie encji HTML (zamienia &lt;br&gt; na <br>)
+        decoded_title = html.unescape(title_content)
+
+        # 2. Zamiana wszystkich wariantów <br>, <br/>, <br /> na znak nowej linii \n
+        clean_title = re.sub(r'<br\s*/?>', '\n', decoded_title)
+
+        # 3. Parsowanie klucz: wartość
+        details = {"ocena": ocena_wartosc}
+
         for line in clean_title.split('\n'):
+            line = line.strip()
+            if not line:
+                continue  # Pomijamy puste linie
+
             if ':' in line:
+                # Dzielimy tylko po pierwszym dwukropku (bo w dacie lub komentarzu mogą być kolejne)
                 key, val = line.split(':', 1)
+                # Zapisujemy do słownika (klucze zamieniamy na małe litery dla spójności)
                 details[key.strip().lower()] = val.strip()
 
-        grades.append({
-            "ocena": ocena,
-            "kategoria": details.get("kategoria", "brak"),
-            "data": details.get("data", "brak"),
-            "waga": details.get("waga", "1")
-        })
+        grades.append(details)
+
     return grades
 
 
 # --- Uruchomienie ---
-with open('doc/oceny.html', 'r', encoding='windows-1250') as f:
+with open('doc/oceny.html', 'r', encoding='utf-8') as f:
     html_data = f.read()
 
-oceny = parse_my_librus(html_data)
+oceny = parse_librus_full_details(html_data)
 
+# Wypisanie wyników w czytelnej formie
 for p in oceny:
-    print(f"\n{p['przedmiot']}:")
-    print(f"  Semestr 1: {[o['ocena'] for o in p['okres_1']]}")
-    print(f"  Semestr 2: {[o['ocena'] for o in p['okres_2']]}")
+    print(f"\n{'=' * 40}")
+    print(f"PRZEDMIOT: {p['przedmiot']}")
+    print(f"{'=' * 40}")
+
+    print("\n--- OKRES 1 ---")
+    if not p['okres_1']:
+        print("Brak ocen.")
+    for o in p['okres_1']:
+        print(f"Ocena: {o.get('ocena')}")
+        for key, value in o.items():
+            if key != 'ocena':
+                print(f"  - {key.capitalize()}: {value}")
+
+    print("\n--- OKRES 2 ---")
+    if not p['okres_2']:
+        print("Brak ocen.")
+    for o in p['okres_2']:
+        print(f"Ocena: {o.get('ocena')}")
+        for key, value in o.items():
+            if key != 'ocena':
+                print(f"  - {key.capitalize()}: {value}")
