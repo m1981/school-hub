@@ -1,0 +1,10 @@
+[project]
+name = "school-hub"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "bs4>=0.0.2",
+    "reflex>=0.8.28.post1",
+]
