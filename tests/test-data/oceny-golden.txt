@@ -1,0 +1,598 @@
+
+========================================
+PRZEDMIOT: Edukacja zdrowotna
+========================================
+
+--- OKRES 1 ---
+Brak ocen.
+
+--- OKRES 2 ---
+Brak ocen.
+
+========================================
+PRZEDMIOT: Etyka
+========================================
+
+--- OKRES 1 ---
+Brak ocen.
+
+--- OKRES 2 ---
+Brak ocen.
+
+========================================
+PRZEDMIOT: Historia
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 4
+     Kategoria: karty pracy (S) (Waga: 3)
+     Data: 2025-09-24 (śr.)
+     Komentarz: Historia-nauka o przeszłości (praca z podręcznikiem)
+🔸 Ocena: +
+     Kategoria: aktywność (S) (Waga: brak)
+     Data: 2025-10-07 (wt.)
+     Komentarz: Określanie wieków na podstawie daty
+🔸 Ocena: 4
+     Kategoria: kartkówka (W) (Waga: 7)
+     Data: 2025-10-21 (wt.)
+     Komentarz: Określanie wieku na podstawie daty
+🔸 Ocena: 3
+     Kategoria: karty pracy (S) (Waga: 3)
+     Data: 2025-10-28 (wt.)
+     Komentarz: Powtórzenie rozdziału 1 (praca z podręcznikiem)
+⭐ Poprawa: 1+ / 5
+     Kategoria: kartkówka (W) (Waga: 7)
+     Data 1. terminu: 2025-12-02 (wt.)
+     Data poprawy:    2025-12-15 (pon.)
+
+--- OKRES 2 ---
+🔸 Ocena: 3+
+     Kategoria: karty pracy (S) (Waga: 3)
+     Data: 2026-02-16 (pon.)
+     Komentarz: Powtórzenie nr 2 - zad. 2 i 7 (praca z podręcznikiem)
+🔸 Ocena: 3
+     Kategoria: kartkówka (W) (Waga: 7)
+     Data: 2026-02-26 (czw.)
+     Komentarz: Jadwiga i Jagiełło, Zawisza Czarny, M. Kopernik
+🔸 Ocena: 3+
+     Kategoria: karty pracy (S) (Waga: 3)
+     Data: 2026-03-23 (pon.)
+     Komentarz: Legiony Polskie we Włoszech (praca z podręcznikiem)
+
+========================================
+PRZEDMIOT: Informatyka
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 5
+     Kategoria: Edytor grafiki - ćwiczenia praktyczne (Waga: 6)
+     Data: 2025-09-16 (wt.)
+     Komentarz: Ćw.3-5 str. 10-11 - użycie kształtu prostokąta, narzędzia zaznaczenia
+🔸 Ocena: 5
+     Kategoria: Edytor grafiki - ćwiczenia praktyczne (Waga: 6)
+     Data: 2025-10-07 (wt.)
+     Komentarz: Ćw. 2-3 str. 27 - Cytryna
+🔸 Ocena: +
+     Kategoria: Praca na lekcji (Waga: brak)
+     Data: 2025-10-14 (wt.)
+     Komentarz: Zad. 15 str. 39
+🔸 Ocena: 5
+     Kategoria: Baltie (Waga: 6)
+     Data: 2026-01-13 (wt.)
+     Komentarz: Ćw. 1 str. 66 - Dom
+
+--- OKRES 2 ---
+🔸 Ocena: 4
+     Kategoria: Baltie (Waga: 6)
+     Data: 2026-02-17 (wt.)
+     Komentarz: Zad. 5 i 12 str. 74-75
+🔸 Ocena: 5
+     Kategoria: Baltie (Waga: 6)
+     Data: 2026-03-03 (wt.)
+     Komentarz: Praca na lekcji. Ćw. 6-8 str. 80-81.
+
+========================================
+PRZEDMIOT: Język angielski
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: np
+     Kategoria: odpowiedź ustna (Waga: brak)
+     Data: 2025-09-05 (pt.)
+🔸 Ocena: 5
+     Kategoria: odpowiedź ustna (Waga: 7)
+     Data: 2025-09-08 (pon.)
+     Komentarz: przedstawianie się, alfabet
+🔸 Ocena: 4
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-09-16 (wt.)
+     Komentarz: dopełniacz saksoński, to be, pory roku, dni tygodnia
+🔸 Ocena: 4
+     Kategoria: odpowiedź ustna (Waga: 7)
+     Data: 2025-09-19 (pt.)
+     Komentarz: dopełniacz saksoński, słówka
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2025-09-29 (pon.)
+     Komentarz: za plusy
+🔸 Ocena: 3
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-10-03 (pt.)
+     Komentarz: dział 1
+⭐ Poprawa: 2 / 4
+     Kategoria: kartkówka (Waga: 7)
+     Data 1. terminu: 2025-10-21 (wt.)
+     Data poprawy:    2025-11-14 (pt.)
+🔸 Ocena: 5
+     Kategoria: zadanie (Waga: 4)
+     Data: 2025-10-31 (pt.)
+     Komentarz: plakat
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2025-11-03 (pon.)
+     Komentarz: Za plusy
+🔸 Ocena: 3
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-11-07 (pt.)
+     Komentarz: dział 2
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2025-12-08 (pon.)
+     Komentarz: za plusy
+🔸 Ocena: 3
+     Kategoria: odpowiedź ustna (Waga: 7)
+     Data: 2025-12-08 (pon.)
+     Komentarz: słówka
+🔸 Ocena: 3
+     Kategoria: zadanie (Waga: 4)
+     Data: 2025-12-08 (pon.)
+     Komentarz: plakat zamek
+🔸 Ocena: 4
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-12-16 (wt.)
+     Komentarz: sprawdzian dzial 3
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2026-01-12 (pon.)
+     Komentarz: za plusy
+🔸 Ocena: +
+     Kategoria: aktywność (Waga: brak)
+     Data: 2026-01-13 (wt.)
+
+--- OKRES 2 ---
+🔸 Ocena: 5
+     Kategoria: zadanie (Waga: 4)
+     Data: 2026-02-16 (pon.)
+     Komentarz: plakaty
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2026-02-17 (wt.)
+     Komentarz: za plusy
+🔸 Ocena: 3
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2026-02-20 (pt.)
+     Komentarz: dział 4
+🔸 Ocena: +
+     Kategoria: aktywność (Waga: brak)
+     Data: 2026-02-24 (wt.)
+⭐ Poprawa: 2 / 4
+     Kategoria: kartkówka (Waga: 7)
+     Data 1. terminu: 2026-02-24 (wt.)
+     Data poprawy:    2026-02-27 (pt.)
+🔸 Ocena: 3
+     Kategoria: odpowiedź ustna (Waga: 7)
+     Data: 2026-03-02 (pon.)
+     Komentarz: słówka
+🔸 Ocena: +
+     Kategoria: aktywność (Waga: brak)
+     Data: 2026-03-03 (wt.)
+🔸 Ocena: 5
+     Kategoria: zadanie (Waga: 4)
+     Data: 2026-03-06 (pt.)
+     Komentarz: plakat str. 72 podręcznik
+🔸 Ocena: 3
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2026-03-13 (pt.)
+     Komentarz: dział 5
+🔸 Ocena: +
+     Kategoria: aktywność (Waga: brak)
+     Data: 2026-03-23 (pon.)
+
+========================================
+PRZEDMIOT: Język polski
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2025-09-05 (pt.)
+     Komentarz: brak podręcznika, ćwiczeń
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2025-09-17 (śr.)
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2025-09-22 (pon.)
+     Komentarz: brak zeszytu
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2025-10-01 (śr.)
+     Komentarz: brak książek
+🔸 Ocena: 5
+     Kategoria: ortografia i interpunkcja (Waga: 5)
+     Data: 2025-10-04 (sob.)
+     Komentarz: dyktando - pisownia wyrazów z rz i ż
+🔸 Ocena: 5-
+     Kategoria: znajomość lektury (Waga: 10)
+     Data: 2025-10-26 (nd.)
+     Komentarz: Akademia pana Kleksa - Jan Brzechwa
+🔸 Ocena: 5
+     Kategoria: praca na lekcji (Waga: 3)
+     Data: 2025-11-07 (pt.)
+     Komentarz: Karta pracy - fonetyka (alfabet, głoski, sylaby, litery)
+🔸 Ocena: 3
+     Kategoria: pisanie - ćwiczenia redakcyjne (Waga: 5)
+     Data: 2025-11-27 (czw.)
+     Komentarz: List prywatny
+🔸 Ocena: 5
+     Kategoria: recytacja (Waga: 5)
+     Data: 2025-11-28 (pt.)
+     Komentarz: Katechizm polskiego dziecka - Władysław Bełza.
+🔸 Ocena: 5
+     Kategoria: ortografia i interpunkcja (Waga: 5)
+     Data: 2025-12-18 (czw.)
+     Komentarz: dyktando - pisownia wyrazów z ó i u
+🔸 Ocena: 3
+     Kategoria: znajomość lektury (Waga: 10)
+     Data: 2025-12-30 (wt.)
+     Komentarz: Mikołajek - René Goscinny, Jean-Jacques Sempé
+
+--- OKRES 2 ---
+🔸 Ocena: 6
+     Kategoria: zadanie (Waga: 4)
+     Data: 2026-03-01 (nd.)
+     Komentarz: Komiks o tematyce latania - zastosowanie elementów komiksu
+🔸 Ocena: 3+
+     Kategoria: znajomość lektury (Waga: 10)
+     Data: 2026-03-15 (nd.)
+     Komentarz: Kajko i Kokosz. Szkoła latania - Janusz Christa
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2026-03-16 (pon.)
+     Komentarz: brak zeszytu
+
+========================================
+PRZEDMIOT: Matematyka
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 3
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-09-22 (pon.)
+     Komentarz: dodawanie i odejmowanie w pamięci
+🔸 Ocena: 5-
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-09-25 (czw.)
+     Komentarz: tabliczka mnożenia i dzielenia w zakresie 100
+🔸 Ocena: 5-
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-10-03 (pt.)
+     Komentarz: Mnożenie w pamięci ( z zerami na końcu: np. 12x10, 30x60, 5x500 oraz 24x7, 74x3)
+🔸 Ocena: 3
+     Kategoria: zadanie (Waga: 4)
+     Data: 2025-10-08 (śr.)
+     Komentarz: karta pracy - dzielenie z resztą
+🔸 Ocena: 3
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-10-16 (czw.)
+     Komentarz: dzielenie liczb (typu 84:7, 2800:40)
+🔸 Ocena: 3-
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-10-30 (czw.)
+     Komentarz: Liczby i działania pamięciowe
+🔸 Ocena: 4
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-11-19 (śr.)
+     Komentarz: Systemy zapisu liczb
+🔸 Ocena: 3
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-12-03 (śr.)
+     Komentarz: dodawanie i odejmowanie pisemne
+⭐ Poprawa: 2 / 4
+     Kategoria: sprawdzian (Waga: 10)
+     Data 1. terminu: 2025-12-18 (czw.)
+     Data poprawy:    2026-01-16 (pt.)
+
+--- OKRES 2 ---
+🔸 Ocena: 3
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2026-02-22 (nd.)
+     Komentarz: Praktyczne zastosowanie matematyki
+🔸 Ocena: 3
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2026-03-04 (śr.)
+     Komentarz: Ułamek jako część całości,zamiana ułamka niewłaściwego na liczbę mieszaną i odwrotnie
+🔸 Ocena: 4
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2026-03-19 (czw.)
+     Komentarz: dodawanie ułamków zwykłych o jednakowych mianownikach, dodawanie liczb mieszanych
+
+========================================
+PRZEDMIOT: Muzyka
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 6
+     Kategoria: Śpiew (Waga: 3)
+     Data: 2025-09-29 (pon.)
+     Komentarz: Z naszymi marzeniami
+🔸 Ocena: +
+     Kategoria: Śpiew (Waga: brak)
+     Data: 2025-11-03 (pon.)
+     Komentarz: W naszej kuchni wszystko gra
+🔸 Ocena: 5
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2025-11-03 (pon.)
+     Komentarz: Karta pracy- struny i smyczki
+🔸 Ocena: 0
+     Kategoria: Śpiew (Waga: brak)
+     Data: 2025-11-17 (pon.)
+     Komentarz: Hymn Polski
+🔸 Ocena: +
+     Kategoria: Praca na lekcji (Waga: brak)
+     Data: 2025-12-08 (pon.)
+     Komentarz: Gra na dzwonkach chromatycznych
+🔸 Ocena: 6
+     Kategoria: Śpiew (Waga: 3)
+     Data: 2025-12-15 (pon.)
+     Komentarz: Hej, ludzie idą święta!
+🔸 Ocena: 6
+     Kategoria: Śpiew na występach (Waga: 7)
+     Data: 2026-01-19 (pon.)
+
+--- OKRES 2 ---
+🔸 Ocena: +
+     Kategoria: Śpiew (Waga: brak)
+     Data: 2026-02-23 (pon.)
+🔸 Ocena: 3
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2026-03-23 (pon.)
+     Komentarz: Karta pracy- Fryderyk Chopin
+
+========================================
+PRZEDMIOT: Plastyka
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 3
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2025-09-16 (wt.)
+     Komentarz: pierwsza strona w zeszycie- mapa myśli
+🔸 Ocena: 5-
+     Kategoria: rysunek konturowy (Waga: 5)
+     Data: 2025-10-02 (czw.)
+     Komentarz: ćwiczenie rysunkowe/rysunek linearny/estetyka
+🔸 Ocena: 5
+     Kategoria: grafika/matryca (Waga: 10)
+     Data: 2025-10-07 (wt.)
+     Komentarz: praca na lekcji/ odbitki graficzne
+🔸 Ocena: 5-
+     Kategoria: choinka (Waga: 10)
+     Data: 2025-12-16 (wt.)
+     Komentarz: pracaplastyczna - choinka
+
+--- OKRES 2 ---
+🔸 Ocena: 5
+     Kategoria: kompzycja  rytmiczna - praca plastyczna (Waga: 10)
+     Data: 2026-02-24 (wt.)
+     Komentarz: plecionka - komp. rytmiczna
+🔸 Ocena: 3+
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2026-03-24 (wt.)
+     Komentarz: kwiaty z bibuły kompozycja zamknięta
+
+========================================
+PRZEDMIOT: Przyroda
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 5
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-09-29 (pon.)
+     Komentarz: kierunki świata
+🔸 Ocena: 5+
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2025-10-31 (pt.)
+🔸 Ocena: np
+     Kategoria: Przygotowanie do lekcji (Waga: brak)
+     Data: 2025-11-06 (czw.)
+     Komentarz: brak zeszytu
+🔸 Ocena: 5-
+     Kategoria: kartkówka (Waga: 7)
+     Data: 2025-12-03 (śr.)
+
+--- OKRES 2 ---
+🔸 Ocena: 3+
+     Kategoria: sprawdzian (Waga: 10)
+     Data: 2026-02-16 (pon.)
+     Komentarz: dział 4
+🔸 Ocena: +
+     Kategoria: odpowiedź ustna (Waga: brak)
+     Data: 2026-03-11 (śr.)
+     Komentarz: z jednego (ostatniego) tematu
+🔸 Ocena: 5-
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2026-03-16 (pon.)
+     Komentarz: Plakat - zdrowy styl życia.
+
+========================================
+PRZEDMIOT: Religia
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 4
+     Kategoria: zadanie - karta pracy (Waga: 4)
+     Data: 2025-11-03 (pon.)
+     Komentarz: Dekalog, 5 warunków dobrej spowiedzi, główne prawdy wiary
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2025-11-14 (pt.)
+🔸 Ocena: 5
+     Kategoria: sprawdzenie notatki (Waga: 1)
+     Data: 2025-11-28 (pt.)
+     Komentarz: notatka wizualna Adwent
+
+--- OKRES 2 ---
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2026-02-20 (pt.)
+🔸 Ocena: 5
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2026-02-27 (pt.)
+🔸 Ocena: 5
+     Kategoria: zadanie (Waga: 4)
+     Data: 2026-03-06 (pt.)
+     Komentarz: krzyżówka - Wielki Post
+
+========================================
+PRZEDMIOT: Technika
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: 5
+     Kategoria: Praca na lekcji (Waga: 1)
+     Data: 2025-09-10 (śr.)
+     Komentarz: strona oraz regulamin
+🔸 Ocena: 4
+     Kategoria: Praca na lekcji - praca twórcza (Waga: 9)
+     Data: 2025-10-22 (śr.)
+     Komentarz: komiks-bezpieczeństwo na co dzień
+🔸 Ocena: 5
+     Kategoria: Praca na lekcji - praca w grupach (Waga: 4)
+     Data: 2025-10-22 (śr.)
+     Komentarz: plakat-cyberbezpieczeństwo
+🔸 Ocena: 4-
+     Kategoria: Praca na lekcji - praca twórcza (Waga: 9)
+     Data: 2025-11-05 (śr.)
+     Komentarz: ramka z elementami drewna
+🔸 Ocena: 0
+     Kategoria: Wademekum rowerzysty - rysunek (Waga: brak)
+     Data: 2025-12-10 (śr.)
+🔸 Ocena: 5
+     Kategoria: aktywność (Waga: 4)
+     Data: 2026-01-14 (śr.)
+
+--- OKRES 2 ---
+⭐ Poprawa: 2 / 4+
+     Kategoria: KARTKÓWKA - zanim wyruszysz (Waga: 6)
+     Data 1. terminu: 2026-03-04 (śr.)
+     Data poprawy:    2026-03-04 (śr.)
+🔸 Ocena: -
+     Kategoria: odpowiedź ustna (Waga: brak)
+     Data: 2026-03-11 (śr.)
+     Komentarz: skrzyżowanie równorzędne
+🔸 Ocena: 5
+     Kategoria: makieta (Waga: 8)
+     Data: 2026-03-18 (śr.)
+     Komentarz: przygotowanie oraz pierwszy etap pracy
+
+========================================
+PRZEDMIOT: Wychowanie fizyczne
+========================================
+
+--- OKRES 1 ---
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-09-15 (pon.)
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-09-19 (pt.)
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-09-29 (pon.)
+     Komentarz: Brak stroju zmiennego
+🔸 Ocena: 6
+     Kategoria: Aktywność miesięczna (Waga: 1)
+     Data: 2025-09-30 (wt.)
+     Komentarz: aktywność wrzesień
+🔸 Ocena: 5
+     Kategoria: Systematyczność miesięczna (Waga: 1)
+     Data: 2025-09-30 (wt.)
+     Komentarz: systematyczność wrzesień
+🔸 Ocena: -
+     Kategoria: aktywność (Waga: brak)
+     Data: 2025-10-01 (śr.)
+     Komentarz: Brak stroju.
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-10-07 (wt.)
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-10-21 (wt.)
+     Komentarz: brak stroju zmiennego
+🔸 Ocena: -
+     Kategoria: systematyczność (Waga: brak)
+     Data: 2025-10-27 (pon.)
+     Komentarz: brak stroju zmiennego
+🔸 Ocena: 5
+     Kategoria: Zadanie (Waga: 1)
+     Data: 2025-10-28 (wt.)
+     Komentarz: beep test
+🔸 Ocena: 6
+     Kategoria: Aktywność miesięczna (Waga: 1)
+     Data: 2025-11-05 (śr.)
+🔸 Ocena: 5
+     Kategoria: Systematyczność miesięczna (Waga: 1)
+     Data: 2025-11-05 (śr.)
+🔸 Ocena: 5
+     Kategoria: Systematyczność miesięczna (Waga: 1)
+     Data: 2025-12-15 (pon.)
+     Komentarz: Listopad
+🔸 Ocena: 5
+     Kategoria: Aktywność miesięczna (Waga: 1)
+     Data: 2025-12-15 (pon.)
+     Komentarz: Listopad
+🔸 Ocena: 4
+     Kategoria: Zadanie (Waga: 1)
+     Data: 2026-01-16 (pt.)
+     Komentarz: beep test
+🔸 Ocena: 4
+     Kategoria: Zadanie (Waga: 1)
+     Data: 2026-01-16 (pt.)
+     Komentarz: odbicia oburącz górą
+
+--- OKRES 2 ---
+🔸 Ocena: -
+     Kategoria: Systematyczność miesięczna (Waga: brak)
+     Data: 2026-03-06 (pt.)
+     Komentarz: brak stroju zmiennego
+🔸 Ocena: 6
+     Kategoria: Aktywność miesięczna (Waga: 1)
+     Data: 2026-03-09 (pon.)
+     Komentarz: aktywność miesięczna styczeń/luty
+🔸 Ocena: 5
+     Kategoria: Systematyczność miesięczna (Waga: 1)
+     Data: 2026-03-09 (pon.)
+     Komentarz: systematyczność styczeń/luty
+🔸 Ocena: -
+     Kategoria: Systematyczność miesięczna (Waga: brak)
+     Data: 2026-03-10 (wt.)
+     Komentarz: Brak stroju
+🔸 Ocena: -
+     Kategoria: Systematyczność miesięczna (Waga: brak)
+     Data: 2026-03-24 (wt.)
+     Komentarz: brak stroju zmiennego
+🔸 Ocena: 5
+     Kategoria: zadanie (Waga: 4)
+     Data: 2026-03-25 (śr.)
+     Komentarz: prowadzenie rozgrzewki
+
+========================================
+PRZEDMIOT: Zajęcia z wychowawcą
+========================================
+
+--- OKRES 1 ---
+Brak ocen.
+
+--- OKRES 2 ---
+Brak ocen.
