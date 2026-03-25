@@ -1,91 +1,55 @@
 from bs4 import BeautifulSoup
 
 
-def parse_librus_grades_robust(html_content):
+def parse_my_librus(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     results = []
 
-    # 1. Znajdź właściwą tabelę (szukamy takiej, która ma w nagłówku "Przedmiot")
-    tables = soup.find_all('table')
-    target_table = None
+    # Iterujemy po wierszach używając klas, które sam podałeś (line0 i line1)
+    # Szukamy ich w całym dokumencie, co omija problem szukania właściwej tabeli
+    rows = soup.find_all('tr', class_=['line0', 'line1'])
 
-    for i, tbl in enumerate(tables):
-        headers = tbl.get_text().lower()
-        if "przedmiot" in headers and "okres 1" in headers:
-            target_table = tbl
-            print(f"[DEBUG] Znaleziono właściwą tabelę ocen (indeks {i}).")
-            break
-
-    if not target_table:
-        print("[DEBUG] BŁĄD: Nie znaleziono tabeli zawierającej słowo 'Przedmiot'.")
-        return []
-
-    # 2. Pobierz wszystkie wiersze z tej tabeli
-    rows = target_table.find_all('tr')
-    print(f"[DEBUG] Tabela ma łącznie {len(rows)} wierszy (wliczając nagłówki i szczegóły).")
-
-    # 3. Iteracja po wierszach
-    for index, row in enumerate(rows):
-        # Szukamy komórek td (pomijamy th - nagłówki)
+    for row in rows:
         cols = row.find_all('td', recursive=False)
 
-        # Interesują nas tylko wiersze, które mają co najmniej 8-9 kolumn (wiersze z przedmiotami)
-        if len(cols) < 8:
+        # Z Twojego kodu wynika, że wiersz przedmiotu ma 11 kolumn
+        if len(cols) < 10:
             continue
 
-        # Wyciągamy tekst z pierwszych kolumn, żeby zlokalizować nazwę przedmiotu
-        col0_text = cols[0].get_text(strip=True)
-        col1_text = cols[1].get_text(strip=True)
-        col2_text = cols[2].get_text(strip=True)
+        subject_name = cols[1].get_text(strip=True)
 
-        # Nazwa przedmiotu zazwyczaj jest w kolumnie 1, ale czasem w 0 (jeśli nie ma checkboxów)
-        subject_name = col1_text if col1_text else col0_text
-
-        if not subject_name or "Zachowanie" in subject_name or "Przedmiot" in subject_name:
+        # Pomijamy wiersze techniczne lub zachowanie
+        if not subject_name or "Zachowanie" in subject_name:
             continue
 
-        print(f"[DEBUG] Przetwarzam przedmiot: '{subject_name}' (Kolumny: {len(cols)})")
+        # Wyciągamy oceny z kolumny 2 (Okres 1) i kolumny 6 (Okres 2)
+        okres1_oceny = extract_grades(cols[2])
+        okres2_oceny = extract_grades(cols[6])
 
-        try:
-            # Na podstawie Twoich logów (9 kolumn), układ to zazwyczaj:
-            # 0: Puste/Ikona, 1: Przedmiot, 2: Oceny I, 3: Średnia I, 4: Proponowana I, 5: Końcowa I, 6: Oceny II
-            # Zabezpieczamy się przed błędem indeksu
-            okres1_oceny = extract_grades_details(cols[2]) if len(cols) > 2 else []
-
-            # Oceny na 2 semestr mogą być w kolumnie 5 lub 6 zależnie od ustawień szkoły
-            # Szukamy kolumny, która ma w sobie linki <a> (czyli oceny)
-            okres2_col_index = 6
-            if len(cols) > 6 and not cols[6].find('a') and cols[5].find('a'):
-                okres2_col_index = 5
-
-            okres2_oceny = extract_grades_details(cols[okres2_col_index]) if len(cols) > okres2_col_index else []
-
-            results.append({
-                "przedmiot": subject_name,
-                "okres_1": okres1_oceny,
-                "okres_2": okres2_oceny
-            })
-
-        except Exception as e:
-            print(f"[DEBUG] Błąd przy przedmiocie {subject_name}: {e}")
+        results.append({
+            "przedmiot": subject_name,
+            "okres_1": okres1_oceny,
+            "okres_2": okres2_oceny
+        })
 
     return results
 
 
-def extract_grades_details(td_cell):
+def extract_grades(td_cell):
     grades = []
-    # Szukamy wszystkich tagów <a> (linków z ocenami)
-    grade_links = td_cell.find_all('a')
+    # Szukamy linków z klasą 'ocena' (zgodnie z Twoim HTML: class="ocena")
+    grade_links = td_cell.find_all('a', class_='ocena')
 
     for link in grade_links:
         ocena = link.get_text(strip=True)
         title_content = link.get('title', '')
 
-        if not ocena or not title_content:
-            continue
+        # Dekodowanie encji HTML (np. &lt;br&gt; na <br>)
+        # BeautifulSoup robi to częściowo, ale w title Librus ma to podwójnie zakodowane
+        clean_title = title_content.replace('&lt;br&gt;', '\n').replace('&lt;br/&gt;', '\n').replace('<br>',
+                                                                                                     '\n').replace(
+            '<br/>', '\n')
 
-        # Parsowanie tooltipa
-        clean_title = title_content.replace('<br>', '\n').replace('<br/>', '\n')
         details = {}
         for line in clean_title.split('\n'):
             if ':' in line:
@@ -102,17 +66,12 @@ def extract_grades_details(td_cell):
 
 
 # --- Uruchomienie ---
-try:
-    with open('doc/oceny.html', 'r', encoding='windows-1250') as f:
-        html_data = f.read()
+with open('doc/oceny.html', 'r', encoding='windows-1250') as f:
+    html_data = f.read()
 
-    oceny_ucznia = parse_librus_grades_robust(html_data)
+oceny = parse_my_librus(html_data)
 
-    print("\n=== WYNIKI KOŃCOWE ===")
-    for p in oceny_ucznia:
-        print(f"\n{p['przedmiot']}:")
-        print(f"  Okres 1: {p['okres_1']}")
-        print(f"  Okres 2: {p['okres_2']}")
-
-except Exception as e:
-    print(f"[BŁĄD KRYTYCZNY] {e}")
+for p in oceny:
+    print(f"\n{p['przedmiot']}:")
+    print(f"  Semestr 1: {[o['ocena'] for o in p['okres_1']]}")
+    print(f"  Semestr 2: {[o['ocena'] for o in p['okres_2']]}")
