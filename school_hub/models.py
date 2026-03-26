@@ -5,13 +5,13 @@ All display values are strings "as is" from scraped HTML.
 Hidden sort_key fields enable cross-provider sorting.
 """
 
-from pydantic import BaseModel
+import reflex as rx
 from typing import Optional
 
 
-class GradeDTO(BaseModel):
+class GradeDTO(rx.Base):
     """Represents a single grade or a retake. Denormalized for easy dashboard rendering."""
-    
+
     # --- CONTEXT (Denormalized relations for the Unified Dashboard) ---
     kid_name: str
     subject_name: str
@@ -22,11 +22,11 @@ class GradeDTO(BaseModel):
     weight: str
     date: Optional[str] = None
     comment: Optional[str] = None
-    
+
     # --- SORTING FIELDS (Hidden from UI, used only for logic) ---
     # Scrapers must convert Provider-specific date strings into a standard integer (YYYYMMDD)
     date_sort_key: int = 0
-    
+
     # --- RETAKE SPECIFIC FIELDS ---
     is_retake: bool = False
     previous_value: Optional[str] = None
@@ -34,7 +34,7 @@ class GradeDTO(BaseModel):
     retake_date: Optional[str] = None
 
 
-class PeriodDTO(BaseModel):
+class PeriodDTO(rx.Base):
     """Represents a grading period (e.g., 'OKRES 1')."""
 
     name: str
@@ -42,14 +42,14 @@ class PeriodDTO(BaseModel):
     empty_message: Optional[str] = None
 
 
-class SubjectDTO(BaseModel):
+class SubjectDTO(rx.Base):
     """Represents a school subject with its grading periods."""
 
     name: str
     periods: list[PeriodDTO]
 
 
-class NewsDTO(BaseModel):
+class NewsDTO(rx.Base):
     """Represents a school announcement/message. Denormalized for dashboard."""
 
     kid_name: str
@@ -60,7 +60,7 @@ class NewsDTO(BaseModel):
     content: str
 
 
-class CalendarEventDTO(BaseModel):
+class CalendarEventDTO(rx.Base):
     """Represents a calendar event (test, quiz, homework). Denormalized for dashboard."""
 
     kid_name: str
@@ -75,7 +75,7 @@ class CalendarEventDTO(BaseModel):
     color_theme: str  # e.g., "red", "blue", "orange" (mapped from subject)
 
 
-class KidGradesDTO(BaseModel):
+class KidGradesDTO(rx.Base):
     """The root container for a specific child's scraped data."""
 
     kid_name: str
