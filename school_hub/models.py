@@ -5,11 +5,11 @@ All display values are strings "as is" from scraped HTML.
 Hidden sort_key fields enable cross-provider sorting.
 """
 
-import reflex as rx
+from pydantic import BaseModel
 from typing import Optional
 
 
-class GradeDTO(rx.Base):
+class GradeDTO(BaseModel):
     """Represents a single grade or a retake. Denormalized for easy dashboard rendering."""
 
     # --- CONTEXT (Denormalized relations for the Unified Dashboard) ---
@@ -34,7 +34,7 @@ class GradeDTO(rx.Base):
     retake_date: Optional[str] = None
 
 
-class PeriodDTO(rx.Base):
+class PeriodDTO(BaseModel):
     """Represents a grading period (e.g., 'OKRES 1')."""
 
     name: str
@@ -42,14 +42,14 @@ class PeriodDTO(rx.Base):
     empty_message: Optional[str] = None
 
 
-class SubjectDTO(rx.Base):
+class SubjectDTO(BaseModel):
     """Represents a school subject with its grading periods."""
 
     name: str
     periods: list[PeriodDTO]
 
 
-class NewsDTO(rx.Base):
+class NewsDTO(BaseModel):
     """Represents a school announcement/message. Denormalized for dashboard."""
 
     kid_name: str
@@ -60,7 +60,7 @@ class NewsDTO(rx.Base):
     content: str
 
 
-class CalendarEventDTO(rx.Base):
+class CalendarEventDTO(BaseModel):
     """Represents a calendar event (test, quiz, homework). Denormalized for dashboard."""
 
     kid_name: str
@@ -75,7 +75,7 @@ class CalendarEventDTO(rx.Base):
     color_theme: str  # e.g., "red", "blue", "orange" (mapped from subject)
 
 
-class KidGradesDTO(rx.Base):
+class KidGradesDTO(BaseModel):
     """The root container for a specific child's scraped data."""
 
     kid_name: str
@@ -83,4 +83,3 @@ class KidGradesDTO(rx.Base):
     subjects: list[SubjectDTO]
     news: list[NewsDTO]
     last_synced: str  # Timestamp string of the last successful scrape
-
