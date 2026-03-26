@@ -4,6 +4,7 @@ This module contains the main Reflex State that manages the application's data a
 Following Reflex best practices, heavy data is stored in backend-only variables (prefixed with _).
 """
 
+from typing import Union
 import reflex as rx
 from datetime import datetime
 from school_hub.models import KidGradesDTO
@@ -16,6 +17,8 @@ class AppState(rx.State):
     # --- UI State (sent to frontend) ---
     current_tab: str = "feed"
     last_synced: str = ""
+    calendar_filter_kid: str = "All"
+    calendar_filter_event_type: str = "All"
 
     # --- Backend-only data (NOT sent to frontend - uses _ prefix) ---
     _kids_data: list[KidGradesDTO] = []
@@ -147,3 +150,122 @@ class AppState(rx.State):
             )
 
         return stats
+
+    @rx.var
+    def get_all_calendar_events(self) -> list[dict[str, str]]:
+        """Get all calendar events from all kids, sorted by date (oldest first).
+
+        Returns:
+            List of dictionaries with all calendar event fields
+        """
+        events = []
+
+        # Collect all calendar events from all kids
+        for kid in self._kids_data:
+            for event in kid.calendar_events:
+                events.append(
+                    {
+                        "kid_name": event.kid_name,
+                        "date_sort_key": str(event.date_sort_key),
+                        "display_date": event.display_date,
+                        "time_range": event.time_range,
+                        "room": event.room,
+                        "subject": event.subject,
+                        "event_type": event.event_type,
+                        "description": event.description,
+                        "teacher": event.teacher,
+                        "color_theme": event.color_theme,
+                    }
+                )
+
+        # Sort by date_sort_key ascending (oldest first for calendar view)
+        events.sort(key=lambda x: int(x.get("date_sort_key", "0")))
+
+        return events
+
+    @rx.var
+    def get_filtered_calendar_events(self) -> list[dict[str, str]]:
+        """Get calendar events filtered by kid and event type.
+
+        Returns:
+            Filtered list of calendar events
+        """
+        events = self.get_all_calendar_events
+
+        # Filter by kid name
+        if self.calendar_filter_kid != "All":
+            events = [e for e in events if e["kid_name"] == self.calendar_filter_kid]
+
+        # Filter by event type
+        if self.calendar_filter_event_type != "All":
+            events = [
+                e for e in events if e["event_type"] == self.calendar_filter_event_type
+            ]
+
+        return events
+
+    @rx.var
+    def get_grouped_calendar_events(
+        self,
+    ) -> list[dict[str, Union[str, list[dict[str, str]]]]]:
+        """Group filtered calendar events by display_date.
+
+        Returns:
+            List of dictionaries with 'date' and 'events' keys
+        """
+        events = self.get_filtered_calendar_events
+        grouped = {}
+
+        # Group events by display_date
+        for event in events:
+            date = event["display_date"]
+            if date not in grouped:
+                grouped[date] = []
+            grouped[date].append(event)
+
+        # Convert to list format
+        result = [{"date": date, "events": events} for date, events in grouped.items()]
+
+        return result
+
+    @rx.var
+    def get_calendar_events_with_headers(self) -> list[dict[str, str]]:
+        """Get calendar events with date headers flattened for single foreach.
+
+        Returns:
+            Flattened list where first event of each date has show_date_header='true'
+        """
+        events = self.get_filtered_calendar_events
+        if not events:
+            return []
+
+        result = []
+        last_date = None
+
+        for event in events:
+            current_date = event["display_date"]
+            # Add flag to show date header for first event of each date
+            event_copy = event.copy()
+            event_copy["show_date_header"] = (
+                "true" if current_date != last_date else "false"
+            )
+            result.append(event_copy)
+            last_date = current_date
+
+        return result
+
+    def set_calendar_filter_kid(self, kid_name: str):
+        """Set the calendar filter for kid name.
+
+        Args:
+            kid_name: Kid name to filter by, or "All" for no filter
+        """
+        self.calendar_filter_kid = kid_name
+
+    def set_calendar_filter_event_type(self, event_type: str):
+        """Set the calendar filter for event type.
+
+        Args:
+            event_type: Event type to filter by, or "All" for no filter
+        """
+        self.calendar_filter_event_type = event_type

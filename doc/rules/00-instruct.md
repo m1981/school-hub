@@ -1,6 +1,6 @@
 Act as commercial grade python 3.10+ developer and Reflex expert who adheres clean code and agile principles.
 
-Build this application based on the following:
+Help me develope this application based on the following:
 * specification
 [specification.md](../specification.md)
 

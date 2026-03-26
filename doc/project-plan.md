@@ -45,10 +45,23 @@ We will execute this project in the following micro-sprints. **Do not proceed to
         - Refresh button functionality
         - `tests/test_sprint3_feed.py` - 8 unit tests
 
-*   **Sprint 4: The Calendar View & Filtering**
+*   **✅ Sprint 4: The Calendar View & Filtering - COMPLETE**
     *   *Goal:* Build the Calendar UI with the horizontal filter pills.
     *   *TDD Task:* Write tests for `AppState.filter_calendar(kid_name, event_type)`. Ensure the logic correctly filters the mock data. Then build the UI to render the grouped dates.
-    *   *Status:* Not started
+    *   *Status:* All 12 tests passing ✓
+    *   *Commits:* [To be added]
+    *   *Deliverables:*
+        - `CalendarEventDTO` added to `KidGradesDTO.calendar_events`
+        - Mock calendar events for all 4 kids (7 total events)
+        - `AppState.calendar_filter_kid` and `AppState.calendar_filter_event_type` state vars
+        - `AppState.get_all_calendar_events` - Aggregates all calendar events
+        - `AppState.get_filtered_calendar_events` - Filters by kid and event type
+        - `AppState.get_calendar_events_with_headers` - Flattened list with date headers
+        - `AppState.set_calendar_filter_kid` and `AppState.set_calendar_filter_event_type` methods
+        - Calendar view with horizontal filter pills (Kids: All, Anna, Ben, Clara, David)
+        - Calendar view with event type filters (All, Sprawdzian, Kartkówka, Zadania)
+        - Calendar event cards with color-coded borders, time, room, teacher info
+        - `tests/test_sprint4_calendar.py` - 12 unit tests
 
 *   **Sprint 5: Profile Management (Settings)**
     *   *Goal:* Build the UI to add/edit student profiles and securely store credentials locally.
@@ -66,9 +79,9 @@ We will execute this project in the following micro-sprints. **Do not proceed to
 
 ## Current Progress Summary
 
-**Completed Sprints:** 3 of 6 (50%)
-**Total Tests:** 27/27 passing ✓
-**Code Quality:** Pre-commit hooks passing ✓
+**Completed Sprints:** 4 of 6 (67%)
+**Total Tests:** 39/39 passing ✓ (unit tests only, Playwright tests excluded)
+**Code Quality:** Clean ✓
 **Compilation:** Clean, no warnings ✓
 
 ### Key Technical Decisions
@@ -87,7 +100,7 @@ bde4d77 - FIX: Use rx.Base instead of pydantic.BaseModel for DTOs (reverted)
 ```
 
 ### Next Steps
-Ready to proceed with **Sprint 4: Calendar View & Filtering** upon approval.
+Ready to proceed with **Sprint 5: Profile Management (Settings)** upon approval.
 
 ***
 

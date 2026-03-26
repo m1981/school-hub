@@ -149,15 +149,173 @@ def feed_view() -> rx.Component:
     )
 
 
+def filter_pill(label: str, is_active, on_click) -> rx.Component:
+    """Render a filter pill button.
+
+    Args:
+        label: The text to display on the pill
+        is_active: Reflex Var or boolean indicating if this filter is active
+        on_click: Event handler for click
+    """
+    return rx.button(
+        label,
+        on_click=on_click,
+        variant=rx.cond(is_active, "soft", "outline"),
+        color_scheme=rx.cond(is_active, "blue", "gray"),
+        size="2",
+        cursor="pointer",
+    )
+
+
+def calendar_event_card(event) -> rx.Component:
+    """Render a single calendar event card."""
+    # Color mapping for themes
+    color_map = {
+        "blue": "blue.7",
+        "red": "red.7",
+        "green": "green.7",
+        "orange": "orange.7",
+        "purple": "purple.7",
+    }
+    border_color = color_map.get(event.color_theme, "gray.7")
+
+    return rx.card(
+        rx.hstack(
+            # Left border color indicator
+            rx.box(
+                width="4px",
+                height="100%",
+                bg=border_color,
+                border_radius="2px",
+            ),
+            # Content
+            rx.vstack(
+                rx.hstack(
+                    rx.text(event.kid_name, weight="bold", size="2"),
+                    rx.spacer(),
+                    rx.badge(event.event_type, color_scheme="blue"),
+                ),
+                rx.text(event.subject, size="3", weight="medium"),
+                rx.text(event.description, size="2", color="gray.11"),
+                rx.hstack(
+                    rx.text("🕐 ", event.time_range, size="1", color="gray.10"),
+                    rx.text("• 📍 ", event.room, size="1", color="gray.10"),
+                ),
+                rx.text("👨‍🏫 ", event.teacher, size="1", color="gray.10"),
+                spacing="1",
+                align_items="start",
+                width="100%",
+            ),
+            spacing="3",
+            width="100%",
+        ),
+        size="2",
+    )
+
+
+def calendar_event_with_date(item) -> rx.Component:
+    """Render calendar event with optional date header."""
+    return rx.cond(
+        item.show_date_header == "true",
+        # Show date header + event
+        rx.vstack(
+            rx.heading(item.display_date, size="5", margin_top="1rem"),
+            calendar_event_card(item),
+            spacing="2",
+            width="100%",
+            align_items="start",
+        ),
+        # Show only event
+        calendar_event_card(item),
+    )
+
+
 def calendar_view() -> rx.Component:
-    """Calendar view - placeholder for Sprint 4."""
+    """Calendar view with filters and grouped events."""
     return rx.vstack(
+        # Header
         rx.heading("Calendar", size="8", weight="bold"),
-        rx.text(
-            "Calendar view - Coming in Sprint 4",
-            size="4",
-            color="gray.11",
-            margin_top="2rem",
+        # Filter Section - Kids
+        rx.vstack(
+            rx.text("Filter by Student:", size="2", weight="bold", color="gray.11"),
+            rx.scroll_area(
+                rx.hstack(
+                    filter_pill(
+                        "All",
+                        AppState.calendar_filter_kid == "All",
+                        lambda: AppState.set_calendar_filter_kid("All"),
+                    ),
+                    filter_pill(
+                        "Anna",
+                        AppState.calendar_filter_kid == "Anna",
+                        lambda: AppState.set_calendar_filter_kid("Anna"),
+                    ),
+                    filter_pill(
+                        "Ben",
+                        AppState.calendar_filter_kid == "Ben",
+                        lambda: AppState.set_calendar_filter_kid("Ben"),
+                    ),
+                    filter_pill(
+                        "Clara",
+                        AppState.calendar_filter_kid == "Clara",
+                        lambda: AppState.set_calendar_filter_kid("Clara"),
+                    ),
+                    filter_pill(
+                        "David",
+                        AppState.calendar_filter_kid == "David",
+                        lambda: AppState.set_calendar_filter_kid("David"),
+                    ),
+                    spacing="2",
+                ),
+                type="hover",
+                scrollbars="horizontal",
+            ),
+            spacing="2",
+            width="100%",
+            align_items="start",
+        ),
+        # Filter Section - Event Types
+        rx.vstack(
+            rx.text("Filter by Type:", size="2", weight="bold", color="gray.11"),
+            rx.scroll_area(
+                rx.hstack(
+                    filter_pill(
+                        "All",
+                        AppState.calendar_filter_event_type == "All",
+                        lambda: AppState.set_calendar_filter_event_type("All"),
+                    ),
+                    filter_pill(
+                        "Sprawdzian",
+                        AppState.calendar_filter_event_type == "Sprawdzian",
+                        lambda: AppState.set_calendar_filter_event_type("Sprawdzian"),
+                    ),
+                    filter_pill(
+                        "Kartkówka",
+                        AppState.calendar_filter_event_type == "Kartkówka",
+                        lambda: AppState.set_calendar_filter_event_type("Kartkówka"),
+                    ),
+                    filter_pill(
+                        "Zadania",
+                        AppState.calendar_filter_event_type == "Zadania",
+                        lambda: AppState.set_calendar_filter_event_type("Zadania"),
+                    ),
+                    spacing="2",
+                ),
+                type="hover",
+                scrollbars="horizontal",
+            ),
+            spacing="2",
+            width="100%",
+            align_items="start",
+        ),
+        # Events with date headers
+        rx.vstack(
+            rx.foreach(
+                AppState.get_calendar_events_with_headers,
+                calendar_event_with_date,
+            ),
+            spacing="3",
+            width="100%",
         ),
         spacing="3",
         padding="1.5rem",

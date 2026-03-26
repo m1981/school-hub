@@ -82,4 +82,5 @@ class KidGradesDTO(BaseModel):
     provider: str  # "Librus" or "Vulcan"
     subjects: list[SubjectDTO]
     news: list[NewsDTO]
+    calendar_events: list[CalendarEventDTO] = []
     last_synced: str  # Timestamp string of the last successful scrape
