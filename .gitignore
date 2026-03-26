@@ -5,3 +5,7 @@ assets/external/
 .web
 __pycache__/
 /.encryption.key
+/.idea/
+/.python-version
+/credentials.json
+/school_hub.egg-info/
