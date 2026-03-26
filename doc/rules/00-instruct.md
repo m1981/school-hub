@@ -11,6 +11,7 @@ Build this application based on the following:
 @doc/rules
 
 1. Work iteratively with atomic and coherent changes.
+2. Commit only files you've touched!
 2. Write UT tests before you edit non-visual code.
 3. if working on GUI code:
    1. Act as commercial grade playwrigh expert who adheres best principles
