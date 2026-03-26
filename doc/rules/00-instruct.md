@@ -1,6 +1,14 @@
 Act as commercial grade python 3.10+ developer and Reflex expert who adheres clean code and agile principles.
  
-Build this application based on the following specification and rules @/doc/specification.md @/doc/rules/00-instruct.txt 
+Build this application based on the following:
+* specification
+[specification.md](../specification.md)
+
+* plan
+[project-plan.md](../project-plan.md)
+
+* rules 
+@doc/rules
 
 1. Work iteratively with atomic and coherent changes.
 2. Write UT tests before you edit non-visual code.
