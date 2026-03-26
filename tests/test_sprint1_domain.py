@@ -2,11 +2,8 @@
 TDD Red phase – these tests define expected behaviour before implementation.
 """
 
-import pytest
 from school_hub.models import (
     GradeDTO,
-    PeriodDTO,
-    SubjectDTO,
     NewsDTO,
     KidGradesDTO,
     CalendarEventDTO,
@@ -201,4 +198,3 @@ def test_mock_service_news_sort_keys_are_nonzero():
             assert news.date_sort_key > 0, (
                 f"News '{news.subject}' for {news.kid_name} has date_sort_key=0"
             )
-

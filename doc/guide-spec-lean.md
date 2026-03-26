@@ -1,7 +1,7 @@
 # The Lean Specification Framework (`spec-lean.md`)
 
 ## 1. The Big Picture (Motivations & Discoveries)
-Traditional documentation (monolithic Word documents, scattered Wikis, or chaotic Jira backlogs) fails in modern web development. It rots quickly, creates silos between Product and Engineering, and becomes impossible to navigate. 
+Traditional documentation (monolithic Word documents, scattered Wikis, or chaotic Jira backlogs) fails in modern web development. It rots quickly, creates silos between Product and Engineering, and becomes impossible to navigate.
 
 This framework ensures our specifications are:
 *   **Frictionless:** Living exactly where the code lives (Docs-as-Code) to prevent context-switching.
@@ -97,10 +97,10 @@ All documentation lives in the `/specs` directory at the root of the repository.
 
 1.  **Anti-Hallucination:** Do NOT invent features, tech stacks, or database columns that were not explicitly provided in the prompt or codebase. If a required detail is missing, insert `[TBD: Requires Human Input]` instead of guessing.
 2.  **Tone & Style:** Use a concise, highly technical, engineering-focused tone. NO marketing fluff. NO introductory filler phrases (e.g., "Here is the document you requested..."). Output ONLY the Markdown.
-3.  **Formatting:** 
+3.  **Formatting:**
     *   Use bullet points and Markdown tables aggressively to maximize readability.
     *   Keep paragraphs under 3 sentences.
-4.  **Mermaid Constraints:** 
+4.  **Mermaid Constraints:**
     *   Use ONLY standard, widely supported Mermaid syntax (`graph TD`, `sequenceDiagram`, `stateDiagram-v2`).
     *   Do not use complex styling or experimental Mermaid features that might break markdown renderers.
 5.  **YAGNI Enforcement:** If the prompt mentions a feature as "future", "planned", or "maybe," it MUST be placed in the `## 🛑 The YAGNI Parking Lot (Out of Scope)` section and excluded from all architecture diagrams and current journeys.

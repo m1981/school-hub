@@ -2,8 +2,8 @@
 
 ## Chapter 1: Domain Understanding & Data Model
 
-**Context:** A locally hosted, unified dashboard built with the Reflex framework to aggregate school data for a family with 4 children across two providers (Librus and Vulcan). 
-**Core Constraint:** This is a **Read-Only Thin Client**. It scrapes HTML, extracts strings "as is", and holds them in memory. There is **NO Database** (no SQL, no ORM). 
+**Context:** A locally hosted, unified dashboard built with the Reflex framework to aggregate school data for a family with 4 children across two providers (Librus and Vulcan).
+**Core Constraint:** This is a **Read-Only Thin Client**. It scrapes HTML, extracts strings "as is", and holds them in memory. There is **NO Database** (no SQL, no ORM).
 
 ### 1.1 Ubiquitous Language
 *   **Provider:** The external school system (Librus or Vulcan).
@@ -32,11 +32,11 @@ class GradeDTO(rx.Base):
     weight: str                     # e.g., "3", "brak"
     date: Optional[str] = None      # e.g., "2025-09-24 (śr.)"
     comment: Optional[str] = None   # e.g., "Historia-nauka o przeszłości..."
-    
+
     # --- SORTING FIELDS (Hidden from UI, used only for logic) ---
     # Scrapers must convert Provider-specific date strings into a standard integer (YYYYMMDD)
     date_sort_key: int = 0          # e.g., 20250924 (Allows sorting newest to oldest)
-    
+
     # --- RETAKE SPECIFIC FIELDS ---
     is_retake: bool = False
     previous_value: Optional[str] = None  # e.g., "1+"
@@ -77,7 +77,7 @@ class KidGradesDTO(rx.Base):
 ### 2.1 Technology Stack
 *   **Framework:** Reflex (Pure Python for both Frontend UI components and Backend state management).
 *   **Scraping:** `BeautifulSoup4` and `requests` (or `Playwright` if JS execution is strictly required by Vulcan/Librus login flows).
-*   **Storage:** **NO DATABASE**. 
+*   **Storage:** **NO DATABASE**.
     *   *Credentials:* Stored securely in a local `.env` file or a local encrypted `config.json`.
     *   *Data Cache:* Stored entirely in memory within the Reflex `AppState` (optionally serialized to a local `cache.json` to survive app restarts).
 
@@ -91,16 +91,16 @@ To keep testing simple and avoid CQRS overhead, the system uses a Service Layer 
 
 ### 2.3 Data Flow Diagram (Conceptual)
 ```text
-[External Provider (Librus/Vulcan)] 
+[External Provider (Librus/Vulcan)]
        | (Raw HTML via HTTP GET)
        v
-[Scraper Adapter (BeautifulSoup)] 
+[Scraper Adapter (BeautifulSoup)]
        | (Parses HTML -> Extracts Strings -> Calculates sort_keys -> Maps to DTOs)
        v
-[Monitoring Service] 
+[Monitoring Service]
        | (Aggregates DTOs for all 4 kids)
        v
-[Reflex AppState] 
+[Reflex AppState]
        | (Holds List[KidGradesDTO] in memory)
        v
 [Reflex UI Components] (Renders strings "As Is", uses sort_keys for ordering)
@@ -157,7 +157,7 @@ The application must be built using **Reflex** with a strict **Mobile-First, Dar
 ### 4.2 View 1: The Feed (School Hub)
 *   **Header:** `rx.hstack` with Title ("School Hub"), subtitle ("Last synced: [Time]"), and a Settings icon.
 *   **Quick Stats:** `rx.scroll_area` (horizontal) containing `rx.vstack` for each child (Avatar image/emoji, Name, Status text).
-*   **Today's Summary List:** 
+*   **Today's Summary List:**
     *   Use `rx.vstack` to list items.
     *   **Card Component:** Each item is an `rx.card` with a dark gray background (`#1C1C1E`).
     *   **Color Coding:** Use a left border (`border_left="4px solid [color]"`) to differentiate subjects or event types.
@@ -167,17 +167,17 @@ The application must be built using **Reflex** with a strict **Mobile-First, Dar
 *   **Filters:** Two horizontal scrollable rows of `rx.badge` or styled `rx.button` components acting as toggle filters.
     *   Row 1: Kids (All, Anna, Ben, Clara, David).
     *   Row 2: Event Types (All, Sprawdziany, Kartkówki, Zadania).
-*   **Grouped List:** 
+*   **Grouped List:**
     *   Iterate over grouped data.
     *   Display a date header (`rx.text` e.g., "Today, March 6").
     *   Render Cards similar to the Feed, but formatted for schedule (Time, Room, Subject, Description, Teacher).
 
 ### 4.4 View 3: Settings / Manage Profiles
 *   **Profile List:** `rx.vstack` of existing profiles. Each row shows Avatar, Name, Provider (with specific icon), and an "Edit" button.
-*   **Add Student Modal/BottomSheet:** 
+*   **Add Student Modal/BottomSheet:**
     *   Triggered by "Add New Student" button.
     *   Use `rx.dialog` or a conditionally rendered absolute positioned `rx.box` sliding from the bottom.
-    *   **Form Elements:** 
+    *   **Form Elements:**
         *   `rx.input` for Child's Name.
         *   `rx.radio_group` or custom segmented control for Provider (Librus / Vulcan).
         *   `rx.input` for Login.
@@ -193,7 +193,7 @@ The application must be built using **Reflex** with a strict **Mobile-First, Dar
 ***
 
 **Podsumowanie dla Ciebie:**
-Mamy teraz kompletną, profesjonalną specyfikację (Rozdziały 1-4). 
+Mamy teraz kompletną, profesjonalną specyfikację (Rozdziały 1-4).
 1. Zdefiniowaliśmy architekturę (Thin Client, brak bazy, Reflex).
 2. Zdefiniowaliśmy struktury danych (DTO z denormalizacją i kluczami sortowania).
 3. Zdefiniowaliśmy wymagania funkcjonalne.

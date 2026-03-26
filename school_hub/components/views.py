@@ -115,7 +115,8 @@ def feed_view() -> rx.Component:
             width="100%",
         ),
         rx.text(
-            "Last synced: ", AppState.last_synced,
+            "Last synced: ",
+            AppState.last_synced,
             size="1",
             color="gray.10",
         ),
@@ -198,7 +199,7 @@ def settings_view() -> rx.Component:
 
 def render_current_view() -> rx.Component:
     """Render the appropriate view based on current_tab state.
-    
+
     Uses rx.cond for reactive rendering (not Python if/else).
     """
     return rx.cond(
@@ -214,4 +215,3 @@ def render_current_view() -> rx.Component:
             ),
         ),
     )
-

@@ -1,5 +1,5 @@
 Act as commercial grade python 3.10+ developer and Reflex expert who adheres clean code and agile principles.
- 
+
 Build this application based on the following:
 * specification
 [specification.md](../specification.md)
@@ -7,7 +7,7 @@ Build this application based on the following:
 * plan
 [project-plan.md](../project-plan.md)
 
-* rules 
+* rules
 @doc/rules
 
 1. Work iteratively with atomic and coherent changes.

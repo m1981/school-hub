@@ -142,7 +142,7 @@
 *   **Step 3:** *Local Grade Average Rules* are defined within the application to approximate the student's standing, as official averages are often complex calculations performed only on the Provider's servers at the end of a term. The local average is an *estimate* for monitoring purposes.
 
 
-Here is the fully dressed use case for the background synchronization process. As a commercial-grade developer, I treat this as a critical system-level use case. Background syncs are often the most fragile part of an aggregation app because external APIs change or rate-limit you. 
+Here is the fully dressed use case for the background synchronization process. As a commercial-grade developer, I treat this as a critical system-level use case. Background syncs are often the most fragile part of an aggregation app because external APIs change or rate-limit you.
 
 Notice how I reference external rules like *Rate Limiting Policy* and *Unified Event Schema* to keep the steps clean (Hub-and-Spoke model).
 
@@ -190,7 +190,7 @@ Notice how I reference external rules like *Rate Limiting Policy* and *Unified E
 *   **Step 3 & 4:** Data retrieval strategies vary heavily. Vulcan may expose a structured JSON API, whereas Librus may require authenticated HTTP requests simulating browser behavior and subsequent HTML DOM parsing (scraping) using libraries like `BeautifulSoup` or `lxml`.
 *   **Step 5:** Normalization involves mapping provider-specific enums (e.g., Librus's attendance codes vs. Vulcan's attendance codes) into a single unified set of enums understood by the Reflex frontend.
 
-*** 
+***
 
 ### Developer Notes (The "Spokes"):
 If we were building out the full technical specification document, the capitalized terms above would link to these definitions:

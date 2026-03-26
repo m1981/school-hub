@@ -5,7 +5,6 @@ Built with Reflex framework following TDD and Clean Code principles.
 """
 
 import reflex as rx
-from school_hub.state import AppState
 from school_hub.components.navigation import bottom_navigation
 from school_hub.components.views import render_current_view
 

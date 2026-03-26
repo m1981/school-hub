@@ -2,9 +2,7 @@
 TDD Red phase – these tests define expected behaviour before implementation.
 """
 
-import pytest
 from school_hub.state import AppState
-from school_hub.models import GradeDTO, NewsDTO
 
 
 # ---------------------------------------------------------------------------
@@ -47,7 +45,9 @@ def test_get_sorted_feed_is_sorted_by_date():
     for i in range(len(feed) - 1):
         current_key = int(feed[i].get("date_sort_key", "0"))
         next_key = int(feed[i + 1].get("date_sort_key", "0"))
-        assert current_key >= next_key, f"Feed not sorted: {current_key} should be >= {next_key}"
+        assert current_key >= next_key, (
+            f"Feed not sorted: {current_key} should be >= {next_key}"
+        )
 
 
 def test_get_sorted_feed_includes_all_kids():
@@ -129,4 +129,3 @@ def test_get_quick_stats_includes_recent_updates():
         assert "provider" in stat
         assert "recent_summary" in stat  # e.g., "2 Grades, 1 News"
         assert "avatar" in stat  # emoji or icon
-

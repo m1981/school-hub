@@ -9,12 +9,12 @@ from school_hub.state import AppState
 
 def bottom_nav_item(icon: str, label: str, tab_value: str) -> rx.Component:
     """Create a single navigation item.
-    
+
     Args:
         icon: Emoji or icon character
         label: Display text for the tab
         tab_value: Internal value for the tab
-    
+
     Returns:
         A clickable navigation item
     """
@@ -66,4 +66,3 @@ def bottom_navigation() -> rx.Component:
         border_color="gray.4",
         z_index="1000",
     )
-
