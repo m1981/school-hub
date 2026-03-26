@@ -11,12 +11,14 @@ Build this application based on the following:
 @doc/rules
 
 1. Work iteratively with atomic and coherent changes.
-2. Commit only files you've touched!
-2. Write UT tests before you edit non-visual code.
-3. if working on GUI code:
+2. Compile project using `uv run reflex compile`
+3. Before commit check if code is alligned with spec
+4. Commit only files you've touched!
+5. Write UT tests before you edit non-visual code.
+6. if working on GUI code:
    1. Act as commercial grade playwrigh expert who adheres best principles
        Confirm any GUI changes using playwright and analyzing screenshots. (keep timeouts max 30sec!)
-4. Every time you finish atomic change update @docs if needed and commit files you've touched.
+7. Every time you finish atomic change update @docs if needed and commit files you've touched.
 
-5. Follow rules in @rules dir
-6. Start from shortly describing who you are and how do you understnad the process.
+8. Follow rules in @rules dir
+9. Start from shortly describing who you are and how do you understnad the process.
