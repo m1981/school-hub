@@ -1,36 +1,38 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
+"""School Hub - Unified School Monitoring Platform.
+
+Mobile-first dashboard for monitoring multiple children across school providers.
+Built with Reflex framework following TDD and Clean Code principles.
+"""
 
 import reflex as rx
-
-from rxconfig import config
-
-
-class State(rx.State):
-    """The app state."""
+from school_hub.state import AppState
+from school_hub.components.navigation import bottom_navigation
+from school_hub.components.views import render_current_view
 
 
 def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
+    """Main application layout with mobile-first design."""
+    return rx.box(
+        # Main content area
+        rx.box(
+            render_current_view(),
+            padding_bottom="5rem",  # Space for bottom nav
+            min_height="100vh",
         ),
+        # Bottom navigation (fixed)
+        bottom_navigation(),
+        # Mobile-first container
+        max_width="400px",
+        margin="0 auto",
+        bg="gray.1",
+        min_height="100vh",
     )
 
 
-app = rx.App()
-app.add_page(index)
+app = rx.App(
+    theme=rx.theme(
+        appearance="light",
+        accent_color="blue",
+    )
+)
+app.add_page(index, title="School Hub")
