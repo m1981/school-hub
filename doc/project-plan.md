@@ -10,26 +10,84 @@ For every feature or component we build, you must follow this exact sequence:
 **3. Agile Sprints (Our Roadmap):**
 We will execute this project in the following micro-sprints. **Do not proceed to the next sprint until I explicitly say "Sprint X Approved."**
 
-*   **Sprint 1: Core Domain & Mock Data (The Foundation)**
-    *   *Goal:* Define the exact `rx.Base` DTOs (GradeDTO, CalendarEventDTO, etc.) from Chapter 1.
+*   **✅ Sprint 1: Core Domain & Mock Data (The Foundation) - COMPLETE**
+    *   *Goal:* Define the exact Pydantic DTOs (GradeDTO, CalendarEventDTO, etc.) from Chapter 1.
     *   *TDD Task:* Create a `MockMonitoringService` that generates dummy data for Anna, Ben, Clara, and David (matching the UI mockups). Write a test asserting the mock service returns the correct number of items.
-*   **Sprint 2: The Reflex UI Shell & Navigation**
+    *   *Status:* All 12 tests passing ✓
+    *   *Commits:* 77c7e99, ff61ca1 (fixed to use pydantic.BaseModel instead of deprecated rx.Base)
+    *   *Deliverables:*
+        - `school_hub/models.py` - 6 DTOs using pydantic.BaseModel
+        - `school_hub/services/mock_service.py` - MockMonitoringService with data for 4 kids
+        - `tests/test_sprint1_domain.py` - 12 unit tests
+
+*   **✅ Sprint 2: The Reflex UI Shell & Navigation - COMPLETE**
     *   *Goal:* Build the mobile-first layout (dark mode, max-width container) and the bottom navigation bar.
     *   *TDD Task:* Implement the `AppState` with a `current_tab` variable. Write a test asserting that changing the tab state correctly updates the active view.
-*   **Sprint 3: The "School Hub" Feed (UI Binding)**
+    *   *Status:* All 7 tests passing ✓
+    *   *Commits:* 5877190
+    *   *Deliverables:*
+        - `school_hub/state.py` - AppState with tab navigation and data loading
+        - `school_hub/components/navigation.py` - Bottom navigation bar
+        - `school_hub/components/views.py` - View components with reactive rendering
+        - `school_hub/school_hub.py` - Main app with mobile-first layout
+        - `tests/test_sprint2_navigation.py` - 7 unit tests
+
+*   **✅ Sprint 3: The "School Hub" Feed (UI Binding) - COMPLETE**
     *   *Goal:* Build the "Quick Stats" and "Today's Summary" lists using the mock data.
     *   *TDD Task:* Write a test for the `AppState.get_sorted_feed()` method to ensure it correctly merges and sorts grades/news from all 4 kids using the `date_sort_key`. Then build the UI components (`rx.card`, `rx.hstack`) to render them.
+    *   *Status:* All 8 tests passing ✓
+    *   *Commits:* 2dda6eb
+    *   *Deliverables:*
+        - `AppState.get_sorted_feed` - Computed property merging/sorting grades and news
+        - `AppState.get_quick_stats` - Computed property for kid summaries
+        - Quick Stats cards with horizontal scroll
+        - Feed cards with conditional rendering (blue=grades, orange=news)
+        - Refresh button functionality
+        - `tests/test_sprint3_feed.py` - 8 unit tests
+
 *   **Sprint 4: The Calendar View & Filtering**
     *   *Goal:* Build the Calendar UI with the horizontal filter pills.
     *   *TDD Task:* Write tests for `AppState.filter_calendar(kid_name, event_type)`. Ensure the logic correctly filters the mock data. Then build the UI to render the grouped dates.
+    *   *Status:* Not started
+
 *   **Sprint 5: Profile Management (Settings)**
     *   *Goal:* Build the UI to add/edit student profiles and securely store credentials locally.
     *   *TDD Task:* Write tests for a `CredentialManager` class that encrypts/decrypts a local JSON file. Then build the Reflex form (`rx.dialog`, `rx.input`) to interact with it.
+    *   *Status:* Not started
+
 *   **Sprint 6: The Scraper Adapters (The Real Data)**
     *   *Goal:* Implement the actual `LibrusScraper` and `VulcanScraper` using `BeautifulSoup`.
     *   *TDD Task:* I will provide you with raw HTML snippets. You will write tests that pass these snippets into your parsers and assert they output the correct DTOs. Only then will you write the parsing logic.
+    *   *Status:* Not started
 
 **"Acknowledge these instructions. If you understand the Agile/TDD protocol and the Sprint roadmap, reply ONLY with: 'Protocol accepted. Ready to begin Sprint 1: Core Domain & Mock Data. Please provide the command to start.'"**
+
+***
+
+## Current Progress Summary
+
+**Completed Sprints:** 3 of 6 (50%)
+**Total Tests:** 27/27 passing ✓
+**Code Quality:** Pre-commit hooks passing ✓
+**Compilation:** Clean, no warnings ✓
+
+### Key Technical Decisions
+1. **Framework Compliance:** Using `pydantic.BaseModel` (not deprecated `rx.Base`)
+2. **State Management:** Backend-only data with `_` prefix, computed properties with `@rx.var`
+3. **UI Patterns:** Reactive rendering with `rx.cond`, not Python if/else
+4. **Testing:** Unit tests before implementation (strict TDD), Playwright for GUI verification
+
+### Git History
+```
+ff61ca1 - FIX: Replace deprecated rx.Base with pydantic.BaseModel
+bde4d77 - FIX: Use rx.Base instead of pydantic.BaseModel for DTOs (reverted)
+2dda6eb - Sprint 3: School Hub Feed with Quick Stats and Activity Feed
+5877190 - Sprint 2: Reflex UI Shell & Navigation
+77c7e99 - Sprint 1: Implement Core Domain & Mock Data
+```
+
+### Next Steps
+Ready to proceed with **Sprint 4: Calendar View & Filtering** upon approval.
 
 ***
 
