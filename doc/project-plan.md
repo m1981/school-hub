@@ -49,7 +49,7 @@ We will execute this project in the following micro-sprints. **Do not proceed to
     *   *Goal:* Build the Calendar UI with the horizontal filter pills.
     *   *TDD Task:* Write tests for `AppState.filter_calendar(kid_name, event_type)`. Ensure the logic correctly filters the mock data. Then build the UI to render the grouped dates.
     *   *Status:* All 12 tests passing ✓
-    *   *Commits:* [To be added]
+    *   *Commits:* 71e8f64
     *   *Deliverables:*
         - `CalendarEventDTO` added to `KidGradesDTO.calendar_events`
         - Mock calendar events for all 4 kids (7 total events)
@@ -92,6 +92,7 @@ We will execute this project in the following micro-sprints. **Do not proceed to
 
 ### Git History
 ```
+71e8f64 - Sprint 4: Calendar View & Filtering
 ff61ca1 - FIX: Replace deprecated rx.Base with pydantic.BaseModel
 bde4d77 - FIX: Use rx.Base instead of pydantic.BaseModel for DTOs (reverted)
 2dda6eb - Sprint 3: School Hub Feed with Quick Stats and Activity Feed
