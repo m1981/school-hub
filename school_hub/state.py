@@ -9,6 +9,7 @@ import reflex as rx
 from datetime import datetime
 from school_hub.models import KidGradesDTO
 from school_hub.services.mock_service import MockMonitoringService
+from school_hub.services.credential_manager import CredentialManager, StudentProfile
 
 
 class AppState(rx.State):
@@ -19,13 +20,22 @@ class AppState(rx.State):
     last_synced: str = ""
     calendar_filter_kid: str = "All"
     calendar_filter_event_type: str = "All"
+    _profiles_version: int = 0  # Internal counter to invalidate profile cache
+
+    # Profile form state
+    profile_form_kid_name: str = ""
+    profile_form_provider: str = "Librus"
+    profile_form_login: str = ""
+    profile_form_password: str = ""
 
     # --- Backend-only data (NOT sent to frontend - uses _ prefix) ---
     _kids_data: list[KidGradesDTO] = []
+    _credential_manager: CredentialManager = None
 
     def __init__(self, *args, **kwargs):
         """Initialize state and load mock data."""
         super().__init__(*args, **kwargs)
+        self._credential_manager = CredentialManager()
         self._load_initial_data()
 
     def _load_initial_data(self):
@@ -269,3 +279,112 @@ class AppState(rx.State):
             event_type: Event type to filter by, or "All" for no filter
         """
         self.calendar_filter_event_type = event_type
+
+    # --- Profile Management Methods ---
+
+    @rx.var
+    def get_profiles(self) -> list[dict[str, str]]:
+        """Get all student profiles for UI display (without passwords).
+
+        Returns:
+            List of profile dictionaries with kid_name, provider, and login (NO passwords)
+        """
+        # Access _profiles_version to make this computed var depend on it
+        _ = self._profiles_version
+
+        profiles = self._credential_manager.load_profiles()
+        # Return profiles without passwords for security
+        return [
+            {
+                "kid_name": profile.kid_name,
+                "provider": profile.provider,
+                "login": profile.login,
+            }
+            for profile in profiles
+        ]
+
+    def add_profile(self, kid_name: str, provider: str, login: str, password: str):
+        """Add a new student profile.
+
+        Args:
+            kid_name: Name of the student
+            provider: Provider name ("Librus" or "Vulcan")
+            login: Login username/email
+            password: Login password
+        """
+        profile = StudentProfile(
+            kid_name=kid_name, provider=provider, login=login, password=password
+        )
+        self._credential_manager.save_profile(profile)
+        # Increment version to invalidate cached computed var
+        self._profiles_version += 1
+
+    def update_profile(self, kid_name: str, provider: str, login: str, password: str):
+        """Update an existing student profile.
+
+        Args:
+            kid_name: Name of the student (used as identifier)
+            provider: Provider name ("Librus" or "Vulcan")
+            login: Login username/email
+            password: Login password
+        """
+        profile = StudentProfile(
+            kid_name=kid_name, provider=provider, login=login, password=password
+        )
+        self._credential_manager.save_profile(profile)
+        # Increment version to invalidate cached computed var
+        self._profiles_version += 1
+
+    def delete_profile(self, kid_name: str):
+        """Delete a student profile.
+
+        Args:
+            kid_name: Name of the student whose profile should be deleted
+        """
+        self._credential_manager.delete_profile(kid_name)
+
+        # Increment version to invalidate cached computed var
+        self._profiles_version += 1
+
+    # --- Profile Form Handlers ---
+
+    def set_profile_form_kid_name(self, value: str):
+        """Set the kid name in the profile form."""
+        self.profile_form_kid_name = value
+
+    def set_profile_form_provider(self, value: str):
+        """Set the provider in the profile form."""
+        self.profile_form_provider = value
+
+    def set_profile_form_login(self, value: str):
+        """Set the login in the profile form."""
+        self.profile_form_login = value
+
+    def set_profile_form_password(self, value: str):
+        """Set the password in the profile form."""
+        self.profile_form_password = value
+
+    def save_profile_from_form(self):
+        """Save the profile from the form data."""
+        if (
+            self.profile_form_kid_name
+            and self.profile_form_login
+            and self.profile_form_password
+        ):
+            self.add_profile(
+                kid_name=self.profile_form_kid_name,
+                provider=self.profile_form_provider,
+                login=self.profile_form_login,
+                password=self.profile_form_password,
+            )
+            # Clear form
+            self.profile_form_kid_name = ""
+            self.profile_form_provider = "Librus"
+            self.profile_form_login = ""
+            self.profile_form_password = ""
+
+    def open_edit_profile_dialog(self, kid_name: str):
+        """Open the edit dialog for a profile (placeholder for future enhancement)."""
+        # For now, this is a placeholder
+        # In a full implementation, we would populate the form with existing data
+        pass

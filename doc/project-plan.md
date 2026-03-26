@@ -63,10 +63,20 @@ We will execute this project in the following micro-sprints. **Do not proceed to
         - Calendar event cards with color-coded borders, time, room, teacher info
         - `tests/test_sprint4_calendar.py` - 12 unit tests
 
-*   **Sprint 5: Profile Management (Settings)**
+*   **✅ Sprint 5: Profile Management (Settings) - COMPLETE**
     *   *Goal:* Build the UI to add/edit student profiles and securely store credentials locally.
     *   *TDD Task:* Write tests for a `CredentialManager` class that encrypts/decrypts a local JSON file. Then build the Reflex form (`rx.dialog`, `rx.input`) to interact with it.
-    *   *Status:* Not started
+    *   *Status:* All 13 tests passing ✓
+    *   *Commits:* [pending]
+    *   *Deliverables:*
+        - `school_hub/services/credential_manager.py` - CredentialManager with Fernet encryption
+        - `StudentProfile` DTO for credentials
+        - `AppState.get_profiles` - Computed var returning profiles without passwords
+        - `AppState.add_profile`, `update_profile`, `delete_profile` - CRUD operations
+        - Profile form state variables and handlers
+        - Settings view with profile cards, add/edit/delete functionality
+        - Empty state UI when no profiles exist
+        - `tests/test_sprint5_profiles.py` - 13 unit tests (8 CredentialManager + 5 AppState)
 
 *   **Sprint 6: The Scraper Adapters (The Real Data)**
     *   *Goal:* Implement the actual `LibrusScraper` and `VulcanScraper` using `BeautifulSoup`.
@@ -79,8 +89,8 @@ We will execute this project in the following micro-sprints. **Do not proceed to
 
 ## Current Progress Summary
 
-**Completed Sprints:** 4 of 6 (67%)
-**Total Tests:** 39/39 passing ✓ (unit tests only, Playwright tests excluded)
+**Completed Sprints:** 5 of 6 (83%)
+**Total Tests:** 52/52 passing ✓ (unit tests only, Playwright tests excluded)
 **Code Quality:** Clean ✓
 **Compilation:** Clean, no warnings ✓
 
@@ -101,7 +111,7 @@ bde4d77 - FIX: Use rx.Base instead of pydantic.BaseModel for DTOs (reverted)
 ```
 
 ### Next Steps
-Ready to proceed with **Sprint 5: Profile Management (Settings)** upon approval.
+Ready to proceed with **Sprint 6: The Scraper Adapters (The Real Data)** upon approval.
 
 ***
 

@@ -339,15 +339,200 @@ def children_view() -> rx.Component:
     )
 
 
+def profile_card(profile) -> rx.Component:
+    """Render a single profile card with edit/delete actions."""
+    # Provider icon mapping
+    provider_icon = rx.cond(
+        profile.provider == "Librus",
+        "📚",
+        "🏫",
+    )
+
+    return rx.card(
+        rx.hstack(
+            # Provider icon
+            rx.text(provider_icon, size="7"),
+            # Profile info
+            rx.vstack(
+                rx.text(profile.kid_name, weight="bold", size="4"),
+                rx.text(profile.provider, size="2", color="blue.9"),
+                rx.text(profile.login, size="1", color="gray.10"),
+                spacing="1",
+                align_items="start",
+                flex="1",
+            ),
+            # Actions
+            rx.hstack(
+                rx.icon_button(
+                    rx.icon("pencil", size=16),
+                    on_click=lambda: AppState.open_edit_profile_dialog(
+                        profile.kid_name
+                    ),
+                    variant="ghost",
+                    size="2",
+                    color_scheme="blue",
+                ),
+                rx.icon_button(
+                    rx.icon("trash-2", size=16),
+                    on_click=lambda: AppState.delete_profile(profile.kid_name),
+                    variant="ghost",
+                    size="2",
+                    color_scheme="red",
+                ),
+                spacing="2",
+            ),
+            spacing="3",
+            width="100%",
+            align_items="center",
+        ),
+        size="2",
+    )
+
+
+def add_profile_dialog() -> rx.Component:
+    """Dialog for adding/editing a student profile."""
+    return rx.dialog.root(
+        rx.dialog.trigger(
+            rx.button(
+                rx.icon("plus", size=18),
+                " Add New Student",
+                size="3",
+                color_scheme="blue",
+            ),
+        ),
+        rx.dialog.content(
+            rx.dialog.title("Add New Student"),
+            rx.dialog.description(
+                "Enter the student's information and provider credentials.",
+                size="2",
+                margin_bottom="1rem",
+            ),
+            rx.vstack(
+                # Student Name
+                rx.vstack(
+                    rx.text("Student Name", size="2", weight="bold"),
+                    rx.input(
+                        placeholder="e.g., Anna",
+                        on_change=AppState.set_profile_form_kid_name,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Provider Selection
+                rx.vstack(
+                    rx.text("School Provider", size="2", weight="bold"),
+                    rx.radio(
+                        ["Librus", "Vulcan"],
+                        default_value="Librus",
+                        on_change=AppState.set_profile_form_provider,
+                        size="2",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Login
+                rx.vstack(
+                    rx.text("Login", size="2", weight="bold"),
+                    rx.input(
+                        placeholder="username or email",
+                        on_change=AppState.set_profile_form_login,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Password
+                rx.vstack(
+                    rx.text("Password", size="2", weight="bold"),
+                    rx.input(
+                        type="password",
+                        placeholder="••••••••",
+                        on_change=AppState.set_profile_form_password,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                spacing="4",
+                width="100%",
+            ),
+            rx.flex(
+                rx.dialog.close(
+                    rx.button(
+                        "Cancel",
+                        variant="soft",
+                        color_scheme="gray",
+                    ),
+                ),
+                rx.dialog.close(
+                    rx.button(
+                        "Save Profile",
+                        on_click=AppState.save_profile_from_form,
+                        color_scheme="blue",
+                    ),
+                ),
+                spacing="3",
+                margin_top="1rem",
+                justify="end",
+            ),
+            max_width="450px",
+        ),
+    )
+
+
 def settings_view() -> rx.Component:
-    """Settings/Profile management - placeholder for Sprint 5."""
+    """Settings/Profile management view."""
     return rx.vstack(
-        rx.heading("Settings", size="8", weight="bold"),
+        # Header
+        rx.hstack(
+            rx.heading("Settings", size="8", weight="bold"),
+            rx.spacer(),
+            add_profile_dialog(),
+            width="100%",
+            align_items="center",
+        ),
+        # Description
         rx.text(
-            "Profile management - Coming in Sprint 5",
-            size="4",
+            "Manage student profiles and credentials",
+            size="2",
             color="gray.11",
-            margin_top="2rem",
+        ),
+        # Profiles list
+        rx.cond(
+            AppState.get_profiles.length() > 0,
+            # Show profiles
+            rx.vstack(
+                rx.foreach(
+                    AppState.get_profiles,
+                    profile_card,
+                ),
+                spacing="3",
+                width="100%",
+                margin_top="1.5rem",
+            ),
+            # Empty state
+            rx.vstack(
+                rx.text("📋", size="9"),
+                rx.text(
+                    "No student profiles yet",
+                    size="4",
+                    weight="bold",
+                    color="gray.11",
+                ),
+                rx.text(
+                    "Add your first student to get started",
+                    size="2",
+                    color="gray.10",
+                ),
+                spacing="2",
+                align_items="center",
+                margin_top="4rem",
+            ),
         ),
         spacing="3",
         padding="1.5rem",
