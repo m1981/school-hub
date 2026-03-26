@@ -681,6 +681,492 @@ graph TB
 ```
 ---
 
+## 11. Settings View - Add New Student Flow
+
+**Purpose**: Detailed specification for adding a new student profile with credentials.
+
+**User Story**: As a parent, I want to add a new student profile so that I can monitor their school data from Librus or Vulcan.
+
+**Flow**:
+1. User clicks "Add New Student" button in Settings view
+2. Dialog opens with empty form
+3. User fills in: Student Name, Provider (radio: Librus/Vulcan), Login, Password
+4. User clicks "Save Profile"
+5. System validates input (all fields required)
+6. System encrypts and saves credentials to `credentials.json`
+7. Dialog closes
+8. Profile card appears in the list
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant SettingsView
+    participant Dialog
+    participant AppState
+    participant CredentialManager
+    participant FileSystem
+
+    User->>Browser: Click "Add New Student" button
+    Browser->>SettingsView: Trigger dialog
+    SettingsView->>Dialog: Open dialog (rx.dialog.root)
+
+    activate Dialog
+    Dialog-->>Browser: Display form with empty fields
+    deactivate Dialog
+
+    User->>Browser: Fill form fields
+    Browser->>AppState: set_profile_form_kid_name("Emma")
+    Browser->>AppState: set_profile_form_provider("Librus")
+    Browser->>AppState: set_profile_form_login("emma@example.com")
+    Browser->>AppState: set_profile_form_password("secret123")
+
+    User->>Browser: Click "Save Profile"
+    Browser->>AppState: save_profile_from_form()
+
+    activate AppState
+    AppState->>AppState: Validate fields (all required)
+
+    alt All fields valid
+        AppState->>AppState: add_profile(kid_name, provider, login, password)
+
+        activate AppState
+        AppState->>CredentialManager: save_profile(StudentProfile)
+
+        activate CredentialManager
+        CredentialManager->>CredentialManager: load_profiles()
+        CredentialManager->>CredentialManager: Check if kid_name exists
+        CredentialManager->>CredentialManager: Append new profile to list
+        CredentialManager->>CredentialManager: Encrypt profiles list
+        CredentialManager->>FileSystem: Write to credentials.json
+        CredentialManager-->>AppState: Success
+        deactivate CredentialManager
+
+        AppState->>AppState: Increment _profiles_version
+        AppState->>AppState: Clear form fields
+        deactivate AppState
+
+        AppState-->>Browser: State updated (WebSocket)
+        deactivate AppState
+
+        Browser->>Dialog: Close dialog (rx.dialog.close)
+        Browser->>SettingsView: Re-render with new profile
+        Browser->>AppState: get_profiles (computed)
+
+        activate AppState
+        AppState->>CredentialManager: load_profiles()
+        activate CredentialManager
+        CredentialManager->>FileSystem: Read credentials.json
+        CredentialManager->>CredentialManager: Decrypt data
+        CredentialManager-->>AppState: List[StudentProfile]
+        deactivate CredentialManager
+        AppState-->>Browser: Profiles without passwords
+        deactivate AppState
+
+        Browser-->>User: Display new profile card
+    else Missing required fields
+        AppState-->>Browser: No action (validation failed)
+        Browser-->>User: Form remains open
+    end
+
+    Note over User,FileSystem: Credentials stored encrypted<br/>with Fernet symmetric encryption
+```
+
+**Validation Rules**:
+- `kid_name`: Required, non-empty string
+- `provider`: Required, must be "Librus" or "Vulcan"
+- `login`: Required, non-empty string
+- `password`: Required, non-empty string
+
+**Security Considerations**:
+- Passwords encrypted with Fernet before storage
+- Encryption key stored in `.encryption.key` file
+- `get_profiles` computed var NEVER returns passwords to frontend
+- Form state cleared immediately after save
+
+**UI Components**:
+```python
+# Dialog structure (already implemented in views.py)
+rx.dialog.root(
+    rx.dialog.trigger(rx.button("Add New Student")),
+    rx.dialog.content(
+        rx.dialog.title("Add New Student"),
+        rx.vstack(
+            rx.input(on_change=AppState.set_profile_form_kid_name),
+            rx.radio(["Librus", "Vulcan"], on_change=AppState.set_profile_form_provider),
+            rx.input(on_change=AppState.set_profile_form_login),
+            rx.input(type="password", on_change=AppState.set_profile_form_password),
+        ),
+        rx.button("Save Profile", on_click=AppState.save_profile_from_form),
+    )
+)
+```
+
+---
+
+## 12. Settings View - Edit Student Profile Flow
+
+**Purpose**: Detailed specification for editing an existing student profile.
+
+**User Story**: As a parent, I want to edit a student's credentials when they change their password or if I made a typo.
+
+**Current Status**: ⚠️ **INCOMPLETE** - `open_edit_profile_dialog` is a placeholder
+
+**Required Implementation**:
+
+### 12.1 State Variables (Add to AppState)
+```python
+# Edit mode tracking
+profile_edit_mode: bool = False
+profile_edit_kid_name: str = ""  # Original kid_name being edited
+```
+
+### 12.2 Event Handlers (Update in AppState)
+
+```python
+def open_edit_profile_dialog(self, kid_name: str):
+    """Open the edit dialog and populate form with existing profile data.
+
+    Args:
+        kid_name: Name of the student whose profile should be edited
+    """
+    # Load existing profile
+    profile = self._credential_manager.get_profile(kid_name)
+
+    if profile:
+        # Populate form with existing data
+        self.profile_form_kid_name = profile.kid_name
+        self.profile_form_provider = profile.provider
+        self.profile_form_login = profile.login
+        self.profile_form_password = profile.password  # Pre-fill for editing
+
+        # Set edit mode
+        self.profile_edit_mode = True
+        self.profile_edit_kid_name = kid_name
+
+def save_profile_from_form(self):
+    """Save the profile from the form data (handles both add and edit)."""
+    if (
+        self.profile_form_kid_name
+        and self.profile_form_login
+        and self.profile_form_password
+    ):
+        if self.profile_edit_mode:
+            # Edit mode: update existing profile
+            self.update_profile(
+                kid_name=self.profile_form_kid_name,
+                provider=self.profile_form_provider,
+                login=self.profile_form_login,
+                password=self.profile_form_password,
+            )
+        else:
+            # Add mode: create new profile
+            self.add_profile(
+                kid_name=self.profile_form_kid_name,
+                provider=self.profile_form_provider,
+                login=self.profile_form_login,
+                password=self.profile_form_password,
+            )
+
+        # Clear form and reset edit mode
+        self.profile_form_kid_name = ""
+        self.profile_form_provider = "Librus"
+        self.profile_form_login = ""
+        self.profile_form_password = ""
+        self.profile_edit_mode = False
+        self.profile_edit_kid_name = ""
+
+def cancel_profile_form(self):
+    """Cancel the form and reset all state."""
+    self.profile_form_kid_name = ""
+    self.profile_form_provider = "Librus"
+    self.profile_form_login = ""
+    self.profile_form_password = ""
+    self.profile_edit_mode = False
+    self.profile_edit_kid_name = ""
+```
+
+### 12.3 UI Component Updates (Update in views.py)
+
+```python
+def add_profile_dialog() -> rx.Component:
+    """Dialog for adding/editing a student profile."""
+    return rx.dialog.root(
+        rx.dialog.trigger(
+            rx.button(
+                rx.icon("plus", size=18),
+                " Add New Student",
+                size="3",
+                color_scheme="blue",
+            ),
+        ),
+        rx.dialog.content(
+            # Dynamic title based on edit mode
+            rx.cond(
+                AppState.profile_edit_mode,
+                rx.dialog.title("Edit Student Profile"),
+                rx.dialog.title("Add New Student"),
+            ),
+            rx.dialog.description(
+                "Enter the student's information and provider credentials.",
+                size="2",
+                margin_bottom="1rem",
+            ),
+            rx.vstack(
+                # Student Name
+                rx.vstack(
+                    rx.text("Student Name", size="2", weight="bold"),
+                    rx.input(
+                        placeholder="e.g., Anna",
+                        value=AppState.profile_form_kid_name,
+                        on_change=AppState.set_profile_form_kid_name,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Provider Selection
+                rx.vstack(
+                    rx.text("School Provider", size="2", weight="bold"),
+                    rx.radio(
+                        ["Librus", "Vulcan"],
+                        value=AppState.profile_form_provider,
+                        on_change=AppState.set_profile_form_provider,
+                        size="2",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Login
+                rx.vstack(
+                    rx.text("Login", size="2", weight="bold"),
+                    rx.input(
+                        placeholder="username or email",
+                        value=AppState.profile_form_login,
+                        on_change=AppState.set_profile_form_login,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                # Password
+                rx.vstack(
+                    rx.text("Password", size="2", weight="bold"),
+                    rx.input(
+                        type="password",
+                        placeholder="••••••••",
+                        value=AppState.profile_form_password,
+                        on_change=AppState.set_profile_form_password,
+                        size="3",
+                    ),
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+                spacing="4",
+                width="100%",
+            ),
+            rx.flex(
+                rx.dialog.close(
+                    rx.button(
+                        "Cancel",
+                        on_click=AppState.cancel_profile_form,
+                        variant="soft",
+                        color_scheme="gray",
+                    ),
+                ),
+                rx.dialog.close(
+                    rx.button(
+                        # Dynamic button text
+                        rx.cond(
+                            AppState.profile_edit_mode,
+                            "Update Profile",
+                            "Save Profile",
+                        ),
+                        on_click=AppState.save_profile_from_form,
+                        color_scheme="blue",
+                    ),
+                ),
+                spacing="3",
+                margin_top="1rem",
+                justify="end",
+            ),
+            max_width="450px",
+        ),
+        # Control dialog open state programmatically
+        open=AppState.profile_edit_mode | (AppState.profile_form_kid_name != ""),
+    )
+```
+
+### 12.4 Edit Flow Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant ProfileCard
+    participant Dialog
+    participant AppState
+    participant CredentialManager
+    participant FileSystem
+
+    User->>Browser: Click "Edit" icon on profile card
+    Browser->>ProfileCard: on_click event
+    ProfileCard->>AppState: open_edit_profile_dialog("TestKid")
+
+    activate AppState
+    AppState->>CredentialManager: get_profile("TestKid")
+
+    activate CredentialManager
+    CredentialManager->>FileSystem: Read credentials.json
+    CredentialManager->>CredentialManager: Decrypt data
+    CredentialManager->>CredentialManager: Find profile by kid_name
+    CredentialManager-->>AppState: StudentProfile(kid_name, provider, login, password)
+    deactivate CredentialManager
+
+    AppState->>AppState: profile_form_kid_name = "TestKid"
+    AppState->>AppState: profile_form_provider = "Librus"
+    AppState->>AppState: profile_form_login = "test@example.com"
+    AppState->>AppState: profile_form_password = "existing_password"
+    AppState->>AppState: profile_edit_mode = True
+    AppState->>AppState: profile_edit_kid_name = "TestKid"
+    AppState-->>Browser: State updated (WebSocket)
+    deactivate AppState
+
+    Browser->>Dialog: Open dialog with pre-filled form
+    Dialog-->>User: Display form with existing data
+
+    User->>Browser: Modify fields (e.g., change password)
+    Browser->>AppState: set_profile_form_password("new_password")
+
+    User->>Browser: Click "Update Profile"
+    Browser->>AppState: save_profile_from_form()
+
+    activate AppState
+    AppState->>AppState: Check profile_edit_mode == True
+    AppState->>AppState: update_profile(kid_name, provider, login, password)
+
+    activate AppState
+    AppState->>CredentialManager: save_profile(StudentProfile)
+
+    activate CredentialManager
+    CredentialManager->>CredentialManager: load_profiles()
+    CredentialManager->>CredentialManager: Find existing profile by kid_name
+    CredentialManager->>CredentialManager: Replace with updated profile
+    CredentialManager->>CredentialManager: Encrypt profiles list
+    CredentialManager->>FileSystem: Write to credentials.json
+    CredentialManager-->>AppState: Success
+    deactivate CredentialManager
+
+    AppState->>AppState: Increment _profiles_version
+    deactivate AppState
+
+    AppState->>AppState: Clear form fields
+    AppState->>AppState: profile_edit_mode = False
+    AppState->>AppState: profile_edit_kid_name = ""
+    AppState-->>Browser: State updated (WebSocket)
+    deactivate AppState
+
+    Browser->>Dialog: Close dialog
+    Browser->>ProfileCard: Re-render with updated data
+    Browser-->>User: Display updated profile card
+
+    Note over User,FileSystem: Updated credentials<br/>encrypted and saved
+```
+
+### 12.5 Key Differences: Add vs Edit
+
+| Aspect | Add Mode | Edit Mode |
+|--------|----------|-----------|
+| Dialog Title | "Add New Student" | "Edit Student Profile" |
+| Button Text | "Save Profile" | "Update Profile" |
+| Form Pre-fill | Empty fields | Populated with existing data |
+| State Flag | `profile_edit_mode = False` | `profile_edit_mode = True` |
+| Operation | `add_profile()` | `update_profile()` |
+| Validation | Check for duplicate kid_name | Allow same kid_name (updating) |
+
+### 12.6 Edge Cases to Handle
+
+1. **User clicks Edit but profile no longer exists**: Show error message or silently fail
+2. **User changes kid_name during edit**: This changes the profile identity - should be prevented or handled carefully
+3. **User clicks Cancel**: Clear form and reset `profile_edit_mode`
+4. **Multiple rapid clicks on Edit**: Debounce or disable button during operation
+
+---
+
+## 13. Settings View - Delete Profile Flow
+
+**Purpose**: Specification for deleting a student profile (already implemented).
+
+**User Story**: As a parent, I want to remove a student profile when they graduate or change schools.
+
+**Current Implementation**: ✅ **COMPLETE** in `AppState.delete_profile()`
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant ProfileCard
+    participant AppState
+    participant CredentialManager
+    participant FileSystem
+
+    User->>Browser: Click "Delete" icon (trash-2)
+    Browser->>ProfileCard: on_click event
+    ProfileCard->>AppState: delete_profile("TestKid")
+
+    activate AppState
+    AppState->>CredentialManager: delete_profile("TestKid")
+
+    activate CredentialManager
+    CredentialManager->>CredentialManager: load_profiles()
+    CredentialManager->>FileSystem: Read credentials.json
+    CredentialManager->>CredentialManager: Decrypt data
+    CredentialManager->>CredentialManager: Filter out profile with kid_name="TestKid"
+    CredentialManager->>CredentialManager: Encrypt remaining profiles
+    CredentialManager->>FileSystem: Write to credentials.json
+    CredentialManager-->>AppState: Success
+    deactivate CredentialManager
+
+    AppState->>AppState: Increment _profiles_version
+    AppState-->>Browser: State updated (WebSocket)
+    deactivate AppState
+
+    Browser->>Browser: Re-render triggered
+    Browser->>AppState: get_profiles (computed)
+
+    activate AppState
+    AppState->>CredentialManager: load_profiles()
+    CredentialManager-->>AppState: Updated list (without deleted profile)
+    AppState-->>Browser: Profiles without passwords
+    deactivate AppState
+
+    Browser-->>User: Profile card removed from list
+
+    Note over User,FileSystem: No confirmation dialog<br/>(consider adding for safety)
+```
+
+**Potential Enhancement**: Add confirmation dialog before deletion
+```python
+# Future improvement
+def confirm_delete_profile(self, kid_name: str):
+    """Show confirmation dialog before deleting."""
+    self.delete_confirm_kid_name = kid_name
+    self.delete_confirm_open = True
+
+def execute_delete_profile(self):
+    """Execute the deletion after confirmation."""
+    if self.delete_confirm_kid_name:
+        self.delete_profile(self.delete_confirm_kid_name)
+        self.delete_confirm_kid_name = ""
+        self.delete_confirm_open = False
+```
+
+---
+
 ## Quick Reference
 
 | Component | Purpose | Location |
@@ -688,6 +1174,7 @@ graph TB
 | `models.py` | DTOs (Pydantic) | Data structure |
 | `state.py` | AppState | State management |
 | `services/mock_service.py` | Mock data generator | Service layer |
+| `services/credential_manager.py` | Encrypted credential storage | Service layer |
 | `components/navigation.py` | Bottom nav bar | UI component |
 | `components/views.py` | View components | UI component |
 | `school_hub.py` | Main app | Entry point |
@@ -700,3 +1187,5 @@ graph TB
 4. **Reactive UI**: WebSocket-based state synchronization
 5. **TDD**: Tests before implementation for all features
 6. **Clean Separation**: UI → State → Services → DTOs
+
+7. **Security**: Credentials encrypted with Fernet, never sent to frontend
