@@ -9,3 +9,11 @@ dependencies = [
     "lxml>=6.0.2",
     "reflex>=0.8.28.post1",
 ]
+
+[tool.setuptools]
+packages = ["school_hub"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]

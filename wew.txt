@@ -1,0 +1,17 @@
+
+	Przedmiot	Okres 1	Okres 2	Koniec roku
+Oceny bieżące	Śr.I	(I)	I	Oceny bieżące	Śr.II	II	Śr.R	R
+	Edukacja zdrowotna	Brak ocen	 -	-	Brak ocen	 -	 -
+	Etyka	Brak ocen	 -	-	Brak ocen	 -	 -
+	Historia	4 + 4 3[ 1+ 5]	 -	4	3+ 3 3+	 -	 -
+	Informatyka	5 5 + 5	 -	5	4 5	 -	 -
+	Język angielski	np 5 4 4 5 3[ 2 4] 5 5 3 5 3 3 4 5 +	 3+	4	5 5 3 +[ 2 4] 3 + 5 3 +	 -	 -
+	Język polski	np np np np 5 5- 5 3 5 5 3	 -	4	6 3+ np	 -	 -
+	Matematyka	3 5- 5- 3 3 3- 4 3[ 2 4]	 -	3+	3 3 4	 -	 -
+	Muzyka	6 + 5 0 + 6 6	 -	5	+ 3	 -	 -
+	Plastyka	3 5- 5 5-	 -	4+	5 3+	 -	 -
+	Przyroda	5 5+ np 5-	 -	5	3+ + 5-	 -	 -
+	Religia	4 5 5	 -	5	5 5 5	 -	 -
+	Technika	5 4 5 4- 0 5	 -	4	[ 2 4+] - 5	 -	 -
+	Wychowanie fizyczne	- - - 6 5 - - - - 5 6 5 5 5 4 4	 -	4	- 6 5 - - 5	 -	 -
+	Zajęcia z wychowawcą	Brak ocen	 -	-	Brak ocen
