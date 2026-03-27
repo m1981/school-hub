@@ -49,3 +49,21 @@ test-ui: ## Run only UI tests (requires Playwright)
 test-all: ## Run all tests (unit + integration + ui)
 	@echo "$(GREEN)Running All Tests...$(RESET)"
 	uv run pytest
+
+
+##@ Playwright Testing
+
+.PHONY: playwright-gui
+playwright-gui: ## Open Playwright Inspector GUI for interactive test debugging
+	@echo "$(GREEN)Opening Playwright Inspector GUI...$(RESET)"
+	PWDEBUG=1 uv run pytest -m "ui" -s --headed
+
+.PHONY: playwright-codegen
+playwright-codegen: ## Open Playwright codegen tool to record tests
+	@echo "$(GREEN)Opening Playwright Codegen...$(RESET)"
+	uv run playwright codegen http://localhost:3000
+
+.PHONY: playwright-trace
+playwright-trace: ## Run UI tests with trace recording (view with: playwright show-trace)
+	@echo "$(GREEN)Running UI tests with trace recording...$(RESET)"
+	uv run pytest -m "ui" --tracing on
