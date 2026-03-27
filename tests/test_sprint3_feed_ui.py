@@ -8,6 +8,8 @@ from playwright.sync_api import Page, expect
 import subprocess
 import time
 
+pytestmark = [pytest.mark.ui, pytest.mark.slow]
+
 
 @pytest.fixture(scope="module")
 def reflex_app():

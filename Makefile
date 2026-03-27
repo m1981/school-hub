@@ -14,10 +14,9 @@ help: ## Display this help
 		/^##@/ { printf "\n$(GREEN)%s$(RESET)\n", substr($$0, 5) }' $(MAKEFILE_LIST)
 
 .PHONY: test-cov
-test-cov: ## Run UNIT tests with strict coverage (Fail under 80%, excludes UI tests)
+test-cov: ## Run UNIT tests with strict coverage (Fail under 80%, excludes UI and integration tests)
 	@echo "$(GREEN)Running Unit Tests with Coverage Check...$(RESET)"
-	uv run pytest -m "not integration" \
-		--ignore=tests/test_sprint3_feed_ui.py \
+	uv run pytest -m "unit" \
 		--cov=school_hub \
 		--cov-report=term-missing \
 		--cov-report=html \
@@ -26,8 +25,27 @@ test-cov: ## Run UNIT tests with strict coverage (Fail under 80%, excludes UI te
 .PHONY: test-cov-simple
 test-cov-simple: ## Run UNIT tests with simple console coverage report (shows missing lines)
 	@echo "$(GREEN)Running Unit Tests with Simple Coverage Report...$(RESET)"
-	uv run pytest -m "not integration" \
-		--ignore=tests/test_sprint3_feed_ui.py \
+	uv run pytest -m "unit" \
 		--cov=school_hub \
 		--cov-report=term-missing \
 		--cov-fail-under=0
+
+.PHONY: test-unit
+test-unit: ## Run only unit tests (fast, no coverage)
+	@echo "$(GREEN)Running Unit Tests...$(RESET)"
+	uv run pytest -m "unit"
+
+.PHONY: test-integration
+test-integration: ## Run only integration tests
+	@echo "$(GREEN)Running Integration Tests...$(RESET)"
+	uv run pytest -m "integration"
+
+.PHONY: test-ui
+test-ui: ## Run only UI tests (requires Playwright)
+	@echo "$(GREEN)Running UI Tests...$(RESET)"
+	uv run pytest -m "ui"
+
+.PHONY: test-all
+test-all: ## Run all tests (unit + integration + ui)
+	@echo "$(GREEN)Running All Tests...$(RESET)"
+	uv run pytest

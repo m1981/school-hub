@@ -26,8 +26,10 @@ dev = [
 pythonpath = "."
 testpaths = ["tests"]
 markers = [
-    "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
-    "unit: marks tests as unit tests",
+    "unit: marks tests as unit tests (fast, no external dependencies)",
+    "integration: marks tests as integration tests (may use external resources)",
+    "ui: marks tests as UI tests (requires Playwright and running app)",
+    "slow: marks tests as slow running tests",
 ]
 # REMOVED "--cov=src ..." from here. We will move it to the Makefile.
 # This prevents coverage from running automatically when you just want to debug a single test.

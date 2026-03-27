@@ -9,3 +9,5 @@ __pycache__/
 /.python-version
 /credentials.json
 /school_hub.egg-info/
+tests/.DS_Store
+.coverage

@@ -2,7 +2,11 @@
 TDD Red phase – these tests define expected behaviour before implementation.
 """
 
+import pytest
+
 from school_hub.state import AppState
+
+pytestmark = pytest.mark.unit
 
 
 # ---------------------------------------------------------------------------

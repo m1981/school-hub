@@ -10,6 +10,7 @@ from datetime import datetime
 from school_hub.models import KidGradesDTO
 from school_hub.services.mock_service import MockMonitoringService
 from school_hub.services.credential_manager import CredentialManager, StudentProfile
+from school_hub.services.connection_tester import ConnectionTester
 
 
 class AppState(rx.State):
@@ -28,14 +29,24 @@ class AppState(rx.State):
     profile_form_login: str = ""
     profile_form_password: str = ""
 
+    # Edit mode tracking
+    profile_edit_mode: bool = False
+    profile_edit_kid_name: str = ""
+
+    # Connection test feedback
+    profile_connection_message: str = ""
+    profile_connection_success: bool = False
+
     # --- Backend-only data (NOT sent to frontend - uses _ prefix) ---
     _kids_data: list[KidGradesDTO] = []
     _credential_manager: CredentialManager = None
+    _connection_tester: ConnectionTester = None
 
     def __init__(self, *args, **kwargs):
         """Initialize state and load mock data."""
         super().__init__(*args, **kwargs)
         self._credential_manager = CredentialManager()
+        self._connection_tester = ConnectionTester()
         self._load_initial_data()
 
     def _load_initial_data(self):
@@ -365,26 +376,111 @@ class AppState(rx.State):
         self.profile_form_password = value
 
     def save_profile_from_form(self):
-        """Save the profile from the form data."""
+        """Save the profile from the form data (handles both add and edit modes).
+
+        Tests connection before saving. Only saves if connection test passes.
+        """
         if (
             self.profile_form_kid_name
             and self.profile_form_login
             and self.profile_form_password
         ):
-            self.add_profile(
-                kid_name=self.profile_form_kid_name,
+            # Test connection first
+            success, message = self._connection_tester.test_connection(
                 provider=self.profile_form_provider,
                 login=self.profile_form_login,
                 password=self.profile_form_password,
+                kid_name=self.profile_form_kid_name,
             )
-            # Clear form
+
+            # Update connection feedback
+            self.profile_connection_success = success
+            self.profile_connection_message = message
+
+            # Only save if connection test passed
+            if not success:
+                return
+
+            if self.profile_edit_mode:
+                # Edit mode: update existing profile
+                self.update_profile(
+                    kid_name=self.profile_form_kid_name,
+                    provider=self.profile_form_provider,
+                    login=self.profile_form_login,
+                    password=self.profile_form_password,
+                )
+            else:
+                # Add mode: create new profile
+                self.add_profile(
+                    kid_name=self.profile_form_kid_name,
+                    provider=self.profile_form_provider,
+                    login=self.profile_form_login,
+                    password=self.profile_form_password,
+                )
+
+            # Clear form and reset edit mode
             self.profile_form_kid_name = ""
             self.profile_form_provider = "Librus"
             self.profile_form_login = ""
             self.profile_form_password = ""
+            self.profile_edit_mode = False
+            self.profile_edit_kid_name = ""
+            self.profile_connection_message = ""
+            self.profile_connection_success = False
 
     def open_edit_profile_dialog(self, kid_name: str):
-        """Open the edit dialog for a profile (placeholder for future enhancement)."""
-        # For now, this is a placeholder
-        # In a full implementation, we would populate the form with existing data
-        pass
+        """Open the edit dialog and populate form with existing profile data.
+
+        Args:
+            kid_name: Name of the student whose profile should be edited
+        """
+        # Load existing profile
+        profile = self._credential_manager.get_profile(kid_name)
+
+        if profile:
+            # Populate form with existing data
+            self.profile_form_kid_name = profile.kid_name
+            self.profile_form_provider = profile.provider
+            self.profile_form_login = profile.login
+            self.profile_form_password = profile.password
+
+            # Set edit mode
+            self.profile_edit_mode = True
+            self.profile_edit_kid_name = kid_name
+
+    def cancel_profile_form(self):
+        """Cancel the form and reset all state."""
+        self.profile_form_kid_name = ""
+        self.profile_form_provider = "Librus"
+        self.profile_form_login = ""
+        self.profile_form_password = ""
+        self.profile_edit_mode = False
+        self.profile_edit_kid_name = ""
+        self.profile_connection_message = ""
+        self.profile_connection_success = False
+
+    def test_profile_connection(self):
+        """Test the connection with current form data without saving."""
+        # Validate required fields
+        if (
+            not self.profile_form_kid_name
+            or not self.profile_form_login
+            or not self.profile_form_password
+        ):
+            self.profile_connection_message = (
+                "Please fill in all fields before testing connection."
+            )
+            self.profile_connection_success = False
+            return
+
+        # Test connection
+        success, message = self._connection_tester.test_connection(
+            provider=self.profile_form_provider,
+            login=self.profile_form_login,
+            password=self.profile_form_password,
+            kid_name=self.profile_form_kid_name,
+        )
+
+        # Update connection feedback
+        self.profile_connection_success = success
+        self.profile_connection_message = message

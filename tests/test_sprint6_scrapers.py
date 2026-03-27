@@ -9,6 +9,8 @@ from pathlib import Path
 from school_hub.services.librus_scraper import LibrusScraper
 from school_hub.models import KidGradesDTO, GradeDTO
 
+pytestmark = pytest.mark.integration
+
 
 @pytest.fixture
 def real_librus_html():

@@ -9,6 +9,8 @@ This test suite follows TDD principles:
 import pytest
 from school_hub.services.credential_manager import CredentialManager, StudentProfile
 
+pytestmark = pytest.mark.unit
+
 
 class TestCredentialManager:
     """Test suite for secure credential storage."""

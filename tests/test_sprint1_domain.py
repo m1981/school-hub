@@ -2,6 +2,8 @@
 TDD Red phase – these tests define expected behaviour before implementation.
 """
 
+import pytest
+
 from school_hub.models import (
     GradeDTO,
     NewsDTO,
@@ -9,6 +11,8 @@ from school_hub.models import (
     CalendarEventDTO,
 )
 from school_hub.services.mock_service import MockMonitoringService
+
+pytestmark = pytest.mark.unit
 
 # ---------------------------------------------------------------------------
 # DTO structure tests

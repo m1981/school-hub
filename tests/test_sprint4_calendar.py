@@ -4,8 +4,12 @@ Tests for calendar event filtering logic and data aggregation.
 Following TDD principles: Write tests first, then implement.
 """
 
+import pytest
+
 from school_hub.state import AppState
 from school_hub.services.mock_service import MockMonitoringService
+
+pytestmark = pytest.mark.unit
 
 
 class TestCalendarFiltering:
